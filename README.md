@@ -1,2 +1,2 @@
-# csbio10
-repo for csbio10
+# CSBIO10_FinalProject
+repo for CSBIO10_FinalProject
