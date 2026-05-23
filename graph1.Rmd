@@ -17,7 +17,7 @@ ANX_dataset
 # Anxiety Dataset: 1320 x 23
 
 ```
-Step 2: Get rid of unnecessary (for our purposes) columns
+Step 2: <b> Get rid of unnecessary (for our purposes) columns </b>
 ```{r}
 ANX_dataset <- ANX_dataset[, -c(11:23)]
 ANX_dataset
