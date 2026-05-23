@@ -7,7 +7,7 @@ output: html_document
 print("Hello, world!")
 ```
 
-**Step 1:** Load Anxiety GWAS dataset
+Step 1: Load Anxiety GWAS dataset
 ```{r}
 install.packages("readxl")
 library('readxl')
