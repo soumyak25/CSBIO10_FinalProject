@@ -75,7 +75,7 @@ ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
   geom_hline(yintercept = bonf_thresh, linetype = "solid") + # Upper line
   geom_vline(xintercept = 0, linetype = "solid", color = "black") + # Neutral OR line
   theme_minimal() +
-  labs(title = "ANXVolcano Plot",
+  labs(title = "ANX Volcano Plot",
        x = "Log2(Odds Ratio)",
        y = "-Log10(P-value)")
 ```
