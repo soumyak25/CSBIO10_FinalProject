@@ -55,32 +55,87 @@ Comparing ORs in relation to p-values helps us understand the significance of th
 # install.packages("ggplot2")
 library(ggplot2)
 
-# 1. Prepare the data: Calculate -log10(P) and log2(OR)
-# We use log transformations to make the plot symmetrical and readable
+# Step 1: Transform the the OR and PVals
+# Taking the log of both OR and PVals help the visualization to be more clear and discernable
 ANX_dataset$logP <- -log10(ANX_dataset$P)
 ANX_dataset$logOR <- log2(ANX_dataset$OR)
 
-# 2. Define your two thresholds (converted to -log10 scale for the Y-axis)
+# Step 2: Calculate the BH/Bon thresholds (converted to -log10 scale for the Y-axis)
 bh_thresh <- -log10(max(ANX_dataset$P[ANX_dataset$BH_P < 0.05])) 
-bonf_thresh <- -log10(0.05 / 1320)
+      # Look at all the raw PVals who have the BH PVals less than 0.05
+      # The largest of those PVals will be the "worst"-most PVal that passes the BH test
+bonf_thresh <- -log10(0.05 / 1320) 
+      # This is simply the Bonferonni Correction equation
 
-# 3. Create a column to categorize your tiers for coloring
-ANX_dataset$Tier <- "BH Only (Orange)"
-ANX_dataset$Tier[ANX_dataset$P < (0.05 / 1320)] <- "Bonferroni (Blue)"
+# Step3: Create a column to color code the 2 tiers 
+ANX_dataset$Tier <- "Benjamin-Hochberg (Pink)" 
+      # All rows PVals labeled as BH right now
+ANX_dataset$Tier[ANX_dataset$P < (0.05 / 1320)] <- "Bonferroni (Purple)" 
+      # Now, only PVals under the Bonferroni Threshold are labeled 
 
-# 4. Plot the Volcano
+# Steo 4: Plot the Volcano
 ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
   geom_point(alpha = 0.8, size = 2) +
   geom_hline(yintercept = bh_thresh, linetype = "dashed") + # Lower line
   geom_hline(yintercept = bonf_thresh, linetype = "solid") + # Upper line
-  geom_vline(xintercept = 0, linetype = "solid", color = "black") + # Neutral OR line
-  theme_minimal() +
+  geom_vline(xintercept = 0, linetype = "solid", color = "black") + # OR divide line
+  theme_minimal(base_family = "serif") +
+  scale_color_manual(values = c(
+    "Benjamin-Hochberg (Pink)" = "pink",
+    "Bonferroni (Purple)" = "#925EFF"
+    )) +
   labs(title = "ANX Volcano Plot",
        x = "Log2(Odds Ratio)",
-       y = "-Log10(P-value)")
+       y = "-Log10(P-value)",
+       subtitle = "Visualizes the protective and risk factors of each SNPs in the GWAS study."
+       )
+    
 ```
-This Volcano plot visualize the risk and protective factors of each SNPs in the GWAS studies. The rightmost SNPs, have OR > 1, meaning they have a higher probability of being associated with ANX. The uppermost SNPs, have the lowest p-values, and thus, their OR scores are most signifcant. From this we can deduce, the gen variants most associated with ANX. 
+This Volcano plot visualize the risk and protective factors of each SNPs in the GWAS studies. The rightmost SNPs, have OR > 1, meaning they have a higher probability of being associated with ANX. The uppermost SNPs, have the lowest p-values, and thus, their OR scores are most signifcant. From this we can deduce, the gene variants most associated with ANX. 
 
 
-From this plot, we reaffirm that all the SNPs used in this GWAS studied were properly adjusted, as all p-values pass the Benjamin-Hochberg test. In addition, the more we can see a majority of the SNPs also have a significant p-value when adjusted with the Bonferroni test as well. From the Volcano-plot, we are able to visualize THE MOST significant SNPs (). We can cross-references these SNPs with those discovered as most significantly associated with ANX in the study. 
+From this plot, we reaffirm that all the SNPs used in this GWAS studied were properly adjusted, as all p-values pass the Benjamin-Hochberg test. In addition, the more we can see a majority of the SNPs also have a significant p-value when adjusted with the Bonferroni correction as well. From the Volcano-plot, we are able to visualize THE MOST significant SNPs. We can cross-references these SNPs with those discovered as most significantly associated with ANX in the study. 
+
+```{r}
+install.packages("ggrepel")
+library(ggrepel)
+# Step 1: Create a new column called 'Label'
+ANX_dataset$Label <- NA
+
+# Step 2: Chose labeling threshold
+# We choose to label dots above y-axis = 10 
+# -log10(PVal) >= 11 ==> PVal < 1e-11
+label_filter <- ANX_dataset$P < 1e-11
+  # Column of Trues and Falses now
+
+# Step 3: Copy the SNP names into the blank column ONLY for the rows that passed the filter
+ANX_dataset$Label[label_filter] <- ANX_dataset$SNP[label_filter]
+```
+
+```{r}
+ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
+  geom_point(alpha = 0.8, size = 2) +
+  
+  geom_text_repel(aes(label = Label), 
+                  color = "black",       # Keeps the text black so it's easy to read
+                  box.padding = 0.5,     # Gives the text bubbles some breathing room
+                  max.overlaps = Inf,    # Forces R to draw every label we asked for
+                  show.legend = FALSE) + # Stops the labels from messing up your legend
+
+  geom_hline(yintercept = bh_thresh, linetype = "dashed") + # Lower line
+  geom_hline(yintercept = bonf_thresh, linetype = "solid") + # Upper line
+  geom_vline(xintercept = 0, linetype = "solid", color = "black") + # OR divide line
+  theme_minimal(base_family = "serif") +
+  scale_color_manual(values = c(
+    "Benjamin-Hochberg (Pink)" = "pink",
+    "Bonferroni (Purple)" = "#925EFF"
+    )) +
+  labs(title = "ANX Volcano Plot",
+       x = "Log2(Odds Ratio)",
+       y = "-Log10(P-value)",
+       subtitle = "Visualizes the protective and risk factors of each SNPs in the GWAS study."
+       )
+```
+Interesting further study ==> are the labeled SNPs physically close together on certain chromosomes?
+
 
