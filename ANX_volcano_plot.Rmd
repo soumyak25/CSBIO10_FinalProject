@@ -1,5 +1,5 @@
 ---
-title: "graph1"
+title: "ANX_volcano_plot"
 output: html_document
 ---
 
@@ -12,7 +12,7 @@ Step 1: Load Anxiety GWAS dataset
 install.packages("readxl")
 library('readxl')
 
-ANX_dataset <- read_excel('/Users/soumyakalle/Desktop/LUNE/Csbio10_project/31389910/ANX_2026_Daner.xls')
+ANX_dataset <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
 ANX_dataset
 # Anxiety Dataset: 1320 x 23
 
@@ -79,5 +79,8 @@ ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
        x = "Log2(Odds Ratio)",
        y = "-Log10(P-value)")
 ```
+This Volcano plot visualize the risk and protective factors of each SNPs in the GWAS studies. The rightmost SNPs, have OR > 1, meaning they have a higher probability of being associated with ANX. The uppermost SNPs, have the lowest p-values, and thus, their OR scores are most signifcant. From this we can deduce, the gen variants most associated with ANX. 
 
+
+From this plot, we reaffirm that all the SNPs used in this GWAS studied were properly adjusted, as all p-values pass the Benjamin-Hochberg test. In addition, the more we can see a majority of the SNPs also have a significant p-value when adjusted with the Bonferroni test as well. From the Volcano-plot, we are able to visualize THE MOST significant SNPs (). We can cross-references these SNPs with those discovered as most significantly associated with ANX in the study. 
 
