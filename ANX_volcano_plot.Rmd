@@ -12,7 +12,7 @@ Step 1: Load Anxiety GWAS dataset
 install.packages("readxl")
 library('readxl')
 
-ANX_dataset <- read_excel('/Users/soumyakalle/Desktop/LUNE/Csbio10_project/31389910/ANX_2026_Daner.xls')
+ANX_dataset <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
 ANX_dataset
 # Anxiety Dataset: 1320 x 23
 
@@ -81,3 +81,6 @@ ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
 ```
 
 
+Odds Ratio: A score for odds of association with anxiety. Greater than 1 means strong odds, less than 1 is low odds, 1 is no association (N/A)
+--> scores have been normalized with log2
+P-value: Significance levels, measuring the validity of these odds values
