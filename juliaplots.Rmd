@@ -3,10 +3,11 @@ title: "Project"
 output: html_document
 date: "2026-05-22"
 ---
-
-```{r}
 read.csv('/Users/julia/Desktop/C and S Bio/ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc.xls - daner_fullANX_v12_woUTAH_11022.csv')
 Xanax <- read.csv('/Users/julia/Desktop/C and S Bio/ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc.xls - daner_fullANX_v12_woUTAH_11022.csv')
+```{r}
+library('readxl')
+Xanax <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
 install.packages("tidyverse")
 library(ggplot2)
 library(tidyverse)
@@ -110,6 +111,7 @@ chr1_data <- Xanax %>%
 
 # 2. Pair each SNP position with its next neighbor and calculate the distance
 distance_table <- data.frame(
+  SNP = chr1_data$SNP[],
   Current_Pos = chr1_data$BP[-nrow(chr1_data)],  # All positions except the very last
   Next_Pos    = chr1_data$BP[-1],                # All positions except the very first
   Distance    = diff(chr1_data$BP)               # The calculated physical distance
