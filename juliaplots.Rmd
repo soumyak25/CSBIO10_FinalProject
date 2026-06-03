@@ -70,9 +70,9 @@ for (i in 1:5) {
   }
 }
 ```
-
-```{r}
 Xanax <- read.csv('/Users/julia/Desktop/C and S Bio/ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc.xls - daner_fullANX_v12_woUTAH_11022.csv')
+```{r}
+
 library(ggplot2)
 library(tidyverse)
 chr1_hits <- Xanax %>% 
@@ -110,15 +110,18 @@ chr1_data <- Xanax %>%
   arrange(BP)
 
 # 2. Pair each SNP position with its next neighbor and calculate the distance
-distance_table <- data.frame(
-  SNP = chr1_data$SNP[],
-  Current_Pos = chr1_data$BP[-nrow(chr1_data)],  # All positions except the very last
-  Next_Pos    = chr1_data$BP[-1],                # All positions except the very first
-  Distance    = diff(chr1_data$BP)               # The calculated physical distance
-)
 
+SNP <- c(chr1_data$SNP[-nrow(chr1_data)])
+Current_Pos <- c(chr1_data$BP[-nrow(chr1_data)]) # All positions except the very last
+Next_Pos <- c(chr1_data$BP[-1])                # All positions except the very first
+Distance <- c(diff(chr1_data$BP))            # The calculated physical distance
+
+distance_table <- data.frame(SNP, Current_Pos, Next_Pos, Distance)
+distance_table
+```
+```{r}
 # 3. Classify each distance into your table's custom scales!
-final_analysis <- distance_table %>% 
+distance_table <- distance_table %>% 
   mutate(
     Classification = case_when(
       Distance < 20000                  ~ "very close",
@@ -128,6 +131,5 @@ final_analysis <- distance_table %>%
     )
   )
 
-# 4. Print it out to see the results
-print(final_analysis)
+distance_table
 ```

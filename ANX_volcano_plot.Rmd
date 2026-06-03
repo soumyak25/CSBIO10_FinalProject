@@ -138,4 +138,10 @@ ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
 ```
 Interesting further study ==> are the labeled SNPs physically close together on certain chromosomes?
 
+```{r}
+sig_SNPs <- ANX_dataset$Label
+sig_SNPs <- sig_SNPs[!is.na(sig_SNPs)]
+sig_SNPs
+
+```
 
