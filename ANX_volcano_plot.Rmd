@@ -145,3 +145,6 @@ sig_SNPs
 
 ```
 
+Odds Ratio: A score for odds of association with anxiety. Greater than 1 means strong odds, less than 1 is low odds, 1 is no association (N/A)
+--> scores have been normalized with log2
+P-value: Significance levels, measuring the validity of these odds values
