@@ -1,0 +1,43 @@
+---
+title: "chr"
+output: html_document
+---
+
+```{r}
+library('readxl')
+Xanax <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
+
+#new empty list thats going to hold all chromosome distances, each entry is a dataframe
+all_chr_distances <- list()
+
+for(chr_num in 1:22){
+  chr_data <- Xanax %>% 
+    filter(CHR == chr_num) %>% 
+    arrange(BP)
+  # 2. Only calculate distances if there are at least 2 SNPs
+  #    because you need a current SNP and a next SNP to find a distance
+  if (nrow(chr_data) >= 2) {
+    
+    # 3. Create a table comparing each SNP to the next SNP
+    distance_table <- data.frame(
+      CHR = chr_num,                         # chromosome number
+      SNP = chr_data$SNP[-nrow(chr_data)],   # all SNPs except the last one
+      Current_Pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
+      Next_Pos = chr_data$BP[-1],            # all positions except the first one
+      Distance = diff(chr_data$BP)           # distance between neighboring SNPs
+    )
+    
+    # 4. Store this chromosome's distance table in the list
+    all_chr_distances[[chr_num]] <- distance_table
+  }
+}
+
+# 5. Combine all chromosome tables into one big data frame
+all_distances <- do.call(rbind, all_chr_distances)
+
+# View the final table
+all_distances 
+
+
+```
+
