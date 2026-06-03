@@ -72,7 +72,6 @@ for (i in 1:5) {
 ```
 
 ```{r}
-Xanax <- read.csv('/Users/julia/Desktop/C and S Bio/ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc.xls - daner_fullANX_v12_woUTAH_11022.csv')
 library(ggplot2)
 library(tidyverse)
 chr1_hits <- Xanax %>% 
