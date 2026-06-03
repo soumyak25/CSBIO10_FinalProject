@@ -6,9 +6,55 @@ output: html_document
 ```{r}
 library('readxl')
 Xanax <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
+```
+```{r}
+chr_distances_1 <- list()
 
+for(chr_num in 1:10){
+  chr_data <- Xanax %>% 
+    filter(CHR == chr_num) %>% 
+    arrange(BP)
+  # 2. Only calculate distances if there are at least 2 SNPs
+  #    because you need a current SNP and a next SNP to find a distance
+  if (nrow(chr_data) >= 2) {
+    
+    # 3. Create a table comparing each SNP to the next SNP
+    distance_table <- data.frame(
+      CHR = chr_num,                         # chromosome number
+      SNP = chr_data$SNP[-nrow(chr_data)],   # all SNPs except the last one
+      Current_Pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
+      Next_Pos = chr_data$BP[-1],            # all positions except the first one
+      Distance = diff(chr_data$BP)           # distance between neighboring SNPs
+    )
+    
+    # 4. Store this chromosome's distance table in the list
+    chr_distances_1[[chr_num]] <- distance_table
+  }
+}
+
+# 5. Combine all chromosome tables into one big data frame
+chr_distances_1  <- do.call(rbind, chr_distances_1)
+
+# 3. Classify each distance into your table's custom scales!
+chr_distances_1  <- chr_distances_1  %>% 
+  mutate(
+    Classification = case_when(
+      Distance < 20000                  ~ "very close",
+      Distance >= 20000 & Distance < 100000   ~ "close",
+      Distance >= 100000 & Distance < 1000000 ~ "far",
+      Distance >= 1000000               ~ "very far"
+    )
+  )
+
+
+# View the final table
+chr_distances_1 
+```
+
+
+```{r}
 #new empty list thats going to hold all chromosome distances, each entry is a dataframe
-all_chr_distances <- list()
+chr_distances_2 <- list()
 
 for(chr_num in 11:22){
   chr_data <- Xanax %>% 
@@ -28,15 +74,15 @@ for(chr_num in 11:22){
     )
     
     # 4. Store this chromosome's distance table in the list
-    all_chr_distances[[chr_num]] <- distance_table
+    chr_distances_2[[chr_num]] <- distance_table
   }
 }
 
 # 5. Combine all chromosome tables into one big data frame
-all_distances <- do.call(rbind, all_chr_distances)
+chr_distances_2 <- do.call(rbind, chr_distances_2)
 
 # 3. Classify each distance into your table's custom scales!
-all_distances <- all_distances %>% 
+chr_distances_2 <- chr_distances_2 %>% 
   mutate(
     Classification = case_when(
       Distance < 20000                  ~ "very close",
@@ -48,7 +94,7 @@ all_distances <- all_distances %>%
 
 
 # View the final table
-all_distances 
+chr_distances_2 
 
 
 ```
