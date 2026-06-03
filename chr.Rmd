@@ -10,7 +10,7 @@ Xanax <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.area
 #new empty list thats going to hold all chromosome distances, each entry is a dataframe
 all_chr_distances <- list()
 
-for(chr_num in 1:22){
+for(chr_num in 11:22){
   chr_data <- Xanax %>% 
     filter(CHR == chr_num) %>% 
     arrange(BP)
@@ -34,6 +34,18 @@ for(chr_num in 1:22){
 
 # 5. Combine all chromosome tables into one big data frame
 all_distances <- do.call(rbind, all_chr_distances)
+
+# 3. Classify each distance into your table's custom scales!
+all_distances <- all_distances %>% 
+  mutate(
+    Classification = case_when(
+      Distance < 20000                  ~ "very close",
+      Distance >= 20000 & Distance < 100000   ~ "close",
+      Distance >= 100000 & Distance < 1000000 ~ "far",
+      Distance >= 1000000               ~ "very far"
+    )
+  )
+
 
 # View the final table
 all_distances 
