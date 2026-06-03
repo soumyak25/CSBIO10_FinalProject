@@ -26,12 +26,17 @@ Xanax <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.area
 
 ```
 
-## Including Plots
+## TO DO: FOR THURSDAY
+Step 1: have 2 data frames: 1 for chromosome positions 1-10, 11-22 (complete)
+Step 2: subset data frames by "VERY CLOSE" (I think it's the 20k bp apart or under?) - Julia
+Step 2.5: format code for screenshots - Jackie
+Step 3: find the genes on which these "VERY CLOSE" SNPs lie on (and cite references) - Soumya, Ananya, Eva
+Step 4: graph the "very close" SNPs on a bar-chart esque graph, separated by gene (one graph = one chromosome, there should be 22 graphs) - Soumya, Ananya, Eva
+Step 5: shove manhattan and volcano into presentation and allot scripts/lines - Julia and Jackie
 
-You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
-plot(pressure)
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
