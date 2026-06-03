@@ -15,8 +15,12 @@ Xanax %>%
   mutate(CHR = as.factor(CHR)) %>% 
   arrange(CHR,BP) %>% 
   mutate(Chromosome_Position = as.numeric(CHR)*1000000000+BP) %>% 
+  #chromosome numbers have been multiplied by 1 million to separate them visually on the graph
   ggplot(aes(Chromosome_Position, -log10(P), color= CHR))+
-  geom_point(alpha=0.5)
+  geom_point(alpha=0.5) + geom_hline(yintercept = 7.30102999566, color = 'darkblue', size = 0.5, alpha = 0.5)
+#y intercept denotes a line of significance; from the article we pulled the data from, the line was
+#p-value of 5^(10^(-8)) or lower
+
 ```
 
 ```{r}
