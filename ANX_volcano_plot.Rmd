@@ -138,6 +138,12 @@ ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
 ```
 Interesting further study ==> are the labeled SNPs physically close together on certain chromosomes?
 
+```{r}
+sig_SNPs <- ANX_dataset$Label
+sig_SNPs <- sig_SNPs[!is.na(sig_SNPs)]
+sig_SNPs
+
+```
 
 Odds Ratio: A score for odds of association with anxiety. Greater than 1 means strong odds, less than 1 is low odds, 1 is no association (N/A)
 --> scores have been normalized with log2
