@@ -1,0 +1,133 @@
+---
+title: "Project"
+output: html_document
+date: "2026-05-22"
+---
+read.csv('/Users/julia/Desktop/C and S Bio/ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc.xls - daner_fullANX_v12_woUTAH_11022.csv')
+Xanax <- read.csv('/Users/julia/Desktop/C and S Bio/ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc.xls - daner_fullANX_v12_woUTAH_11022.csv')
+```{r}
+library('readxl')
+Xanax <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
+install.packages("tidyverse")
+library(ggplot2)
+library(tidyverse)
+Xanax %>%
+  select(SNP, CHR, BP, P) %>% 
+  mutate(CHR = as.factor(CHR)) %>% 
+  arrange(CHR,BP) %>% 
+  mutate(Chromosome_Position = as.numeric(CHR)*1000000000+BP) %>% 
+  ggplot(aes(Chromosome_Position, -log10(P), color= CHR))+
+  geom_point(alpha=0.5)
+```
+
+```{r}
+Xanax %>%
+  select(SNP, CHR, BP, P) %>% 
+  mutate(CHR = as.factor(CHR)) %>% 
+  arrange(CHR,BP) %>% 
+  ggplot(aes(BP, -log10(P), color= CHR))+
+  geom_point(alpha=0.5)+
+  facet_wrap(~CHR)
+```
+
+```{r}
+for (i in 1:6) {
+  start_chr <- (i-1)*5+1
+  end_chr <- i*5
+  if(end_chr>22) {
+    end_chr<-22
+  }
+chr_batch <- as.numeric(start_chr:end_chr)
+filt_xanax <- Xanax %>%
+  select(SNP, CHR, BP, P) %>% 
+  filter(as.numeric(CHR) %in% chr_batch)
+
+if (nrow(filt_xanax)>0) {
+  fx <- ggplot(filt_xanax, aes(BP, -log10(P), color=as.factor(CHR)))+
+    geom_point(alpha=0.5)+
+    facet_wrap(~CHR, nrow = 1, scales="free_x")+
+    labs(title=paste("Chromosomes", start_chr, "to", end_chr))
+  print(fx)
+  }
+}
+```
+
+```{r}
+for (i in 1:5) {
+  start_chr <- (i-1)*5+1
+  end_chr <- i*5
+  chr_batch <- as.numeric(start_chr:end_chr)
+  filt_xanax <- Xanax %>%
+    select(SNP, CHR, BP, P) %>% 
+    filter(as.numeric(CHR) %in% chr_batch)
+  if (nrow(filt_xanax)>0) {
+    fx <- ggplot(filt_xanax, aes(BP, -log10(P), color=as.factor(CHR)))+
+      geom_point(alpha=0.5)+
+      lims(y=c(4,15))+
+      facet_wrap(~CHR, nrow = 1, scales="free_x")+
+      labs(title=paste("Chromosomes", start_chr, "to", end_chr))
+    print(fx)
+  }
+}
+```
+
+```{r}
+Xanax <- read.csv('/Users/julia/Desktop/C and S Bio/ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc.xls - daner_fullANX_v12_woUTAH_11022.csv')
+library(ggplot2)
+library(tidyverse)
+chr1_hits <- Xanax %>% 
+  filter(CHR == 1, -log10(P) > 4)
+
+# 2. Plot them exactly on a single line (y = 1)
+ggplot(chr1_hits, aes(x = BP, y = 1)) +
+  geom_point(alpha = 0.5, color = "skyblue", size = 3) +
+  
+  # This section strips away all the empty vertical y-axis space
+  theme_minimal() +
+  theme(
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    
+    # THIS IS THE MAGIC: Forces the plot to be short and wide like a literal line
+    aspect.ratio = 0.05 
+  ) +
+  labs(title = "Chromosome 1: Base Pair Positions", x = "Base Pair Position (BP)")
+mean(diff(sort(chr1_hits$BP)))
+chr1_positions <- Xanax %>% 
+  filter(CHR == 1) %>% 
+  select(BP) %>% 
+  arrange(BP)
+print(chr1_positions)
+```
+
+```{r}
+# 1. First, get your sorted positions as a data frame
+chr1_data <- Xanax %>% 
+  filter(CHR == 1) %>% 
+  arrange(BP)
+
+# 2. Pair each SNP position with its next neighbor and calculate the distance
+distance_table <- data.frame(
+  SNP = chr1_data$SNP[],
+  Current_Pos = chr1_data$BP[-nrow(chr1_data)],  # All positions except the very last
+  Next_Pos    = chr1_data$BP[-1],                # All positions except the very first
+  Distance    = diff(chr1_data$BP)               # The calculated physical distance
+)
+
+# 3. Classify each distance into your table's custom scales!
+final_analysis <- distance_table %>% 
+  mutate(
+    Classification = case_when(
+      Distance < 20000                  ~ "very close",
+      Distance >= 20000 & Distance < 100000   ~ "close",
+      Distance >= 100000 & Distance < 1000000 ~ "far",
+      Distance >= 1000000               ~ "very far"
+    )
+  )
+
+# 4. Print it out to see the results
+print(final_analysis)
+```
