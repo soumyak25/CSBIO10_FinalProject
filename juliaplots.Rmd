@@ -78,10 +78,6 @@ Xanax <- read.csv('/Users/julia/Desktop/C and S Bio/ANX_2026_daner_fullANX_v12_w
 
 
 ```{r}
-<<<<<<< HEAD
->>>>>>>
-=======
->>>>>>> b56ebf22da8a04f3c745222dd30ea9fa1f2e028e
 library(ggplot2)
 library(tidyverse)
 chr1_hits <- Xanax %>% 
