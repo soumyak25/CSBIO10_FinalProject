@@ -1,3 +1,14 @@
 # CSBIO10_FinalProject
-repo for CSBIO10_FinalProject
-this line is from RStudio
+Analysis of Gene Variants Associated with Anxiety Disorders in a GWAS Study
+
+**Contributors**: Soumya Kalle, Ananya Atri, Yifan Zhuo, Julia Lohman, and Jacqueline Chavarry
+
+**Professor**: Dr. Christy Lee @ UCLA
+
+## **Data Pre-Processing**
+
+## **Methodology**
+
+## **Citations**
+
+
