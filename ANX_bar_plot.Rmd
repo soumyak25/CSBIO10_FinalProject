@@ -1,0 +1,148 @@
+---
+title: "chr"
+output: html_document
+---
+
+```{r}
+library('readxl')
+Xanax <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
+```
+```{r}
+library('tidyverse')
+
+chr_distances_1 <- list()
+
+for(chr_num in 1:10){
+  chr_data <- Xanax %>% 
+    filter(CHR == chr_num) %>% 
+    arrange(BP)
+  # 2. Only calculate distances if there are at least 2 SNPs
+  #    because you need a current SNP and a next SNP to find a distance
+  if (nrow(chr_data) >= 2) {
+    
+    # 3. Create a table comparing each SNP to the next SNP
+    distance_table <- data.frame(
+      CHR = chr_num,                         # chromosome number
+      SNP = chr_data$SNP[-nrow(chr_data)],   # all SNPs except the last one
+      Current_Pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
+      Next_Pos = chr_data$BP[-1],            # all positions except the first one
+      Distance = diff(chr_data$BP)           # distance between neighboring SNPs
+    )
+    
+    # 4. Store this chromosome's distance table in the list
+    chr_distances_1[[chr_num]] <- distance_table
+  }
+}
+
+# 5. Combine all chromosome tables into one big data frame
+chr_distances_1  <- do.call(rbind, chr_distances_1)
+
+# 3. Classify each distance into your table's custom scales!
+chr_distances_1  <- chr_distances_1  %>% 
+  mutate(
+    Classification = case_when(
+      Distance < 20000                  ~ "very close",
+      Distance >= 20000 & Distance < 100000   ~ "close",
+      Distance >= 100000 & Distance < 1000000 ~ "far",
+      Distance >= 1000000               ~ "very far"
+    )
+  )
+
+
+# View the final table
+chr_distances_1 
+```
+
+
+```{r}
+#new empty list thats going to hold all chromosome distances, each entry is a dataframe
+chr_distances_2 <- list()
+
+for(chr_num in 11:22){
+  chr_data <- Xanax %>% 
+    filter(CHR == chr_num) %>% 
+    arrange(BP)
+  # 2. Only calculate distances if there are at least 2 SNPs
+  #    because you need a current SNP and a next SNP to find a distance
+  if (nrow(chr_data) >= 2) {
+    
+    # 3. Create a table comparing each SNP to the next SNP
+    distance_table <- data.frame(
+      CHR = chr_num,                         # chromosome number
+      SNP = chr_data$SNP[-nrow(chr_data)],   # all SNPs except the last one
+      Current_Pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
+      Next_Pos = chr_data$BP[-1],            # all positions except the first one
+      Distance = diff(chr_data$BP)           # distance between neighboring SNPs
+    )
+    
+    # 4. Store this chromosome's distance table in the list
+    chr_distances_2[[chr_num]] <- distance_table
+  }
+}
+
+# 5. Combine all chromosome tables into one big data frame
+chr_distances_2 <- do.call(rbind, chr_distances_2)
+
+# 3. Classify each distance into your table's custom scales!
+chr_distances_2 <- chr_distances_2 %>% 
+  mutate(
+    Classification = case_when(
+      Distance < 20000                  ~ "very close",
+      Distance >= 20000 & Distance < 100000   ~ "close",
+      Distance >= 100000 & Distance < 1000000 ~ "far",
+      Distance >= 1000000               ~ "very far"
+    )
+  )
+
+
+# View the final table
+chr_distances_2 
+
+
+```
+
+---------------This is for analysis with the volcano plot------------------
+
+```{r}
+# 1. First, get your sorted positions as a data frame
+chr1_data <- Xanax %>% 
+  filter(CHR == 1) %>% 
+  arrange(BP)
+
+# 2. Pair each SNP position with its next neighbor and calculate the distance
+
+SNP <- c(chr1_data$SNP[-nrow(chr1_data)])
+Current_Pos <- c(chr1_data$BP[-nrow(chr1_data)]) # All positions except the very last
+Next_Pos <- c(chr1_data$BP[-1])                # All positions except the very first
+Distance <- c(diff(chr1_data$BP))            # The calculated physical distance
+
+distance_table <- data.frame(SNP, Current_Pos, Next_Pos, Distance)
+distance_table
+```
+```{r}
+# 3. Classify each distance into your table's custom scales!
+distance_table <- distance_table %>% 
+  mutate(
+    Classification = case_when(
+      Distance < 20000                  ~ "very close",
+      Distance >= 20000 & Distance < 100000   ~ "close",
+      Distance >= 100000 & Distance < 1000000 ~ "far",
+      Distance >= 1000000               ~ "very far"
+    )
+  )
+
+distance_table
+```
+```{r}
+snippers <- c("rs58825580", "rs7110863",  "rs10959883", "rs11241568", "rs4976976",  "rs10476497", "rs77960")
+snippers
+snppydoo <- c()
+for (i in 1:length(distance_table$SNP)) {
+  for (j in 1:length(snippers)) {
+    append(snppydoo, distance_table$SNP == i)
+  }
+}
+snppydoo
+```
+```
+
