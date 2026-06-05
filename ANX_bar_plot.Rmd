@@ -101,6 +101,23 @@ chr_distances_2
 
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---------------This is for analysis with the volcano plot------------------
 
 ```{r}
