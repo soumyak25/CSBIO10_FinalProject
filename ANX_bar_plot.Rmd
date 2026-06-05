@@ -24,8 +24,8 @@ for(chr_num in 1:10){
     distance_table <- data.frame(
       CHR = chr_num,                         # chromosome number
       SNP = chr_data$SNP[-nrow(chr_data)],   # all SNPs except the last one
-      Current_Pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
-      Next_Pos = chr_data$BP[-1],            # all positions except the first one
+      curr_SNP_pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
+      next_SNP_pos = chr_data$BP[-1],            # all positions except the first one
       Distance = diff(chr_data$BP)           # distance between neighboring SNPs
     )
     
@@ -70,8 +70,8 @@ for(chr_num in 11:22){
     distance_table <- data.frame(
       CHR = chr_num,                         # chromosome number
       SNP = chr_data$SNP[-nrow(chr_data)],   # all SNPs except the last one
-      Current_Pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
-      Next_Pos = chr_data$BP[-1],            # all positions except the first one
+      curr_SNP_pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
+      next_SNP_pos = chr_data$BP[-1],            # all positions except the first one
       Distance = diff(chr_data$BP)           # distance between neighboring SNPs
     )
     
