@@ -12,14 +12,16 @@ library(ggplot2)
 library(tidyverse)
 Xanax %>%
   select(SNP, CHR, BP, P) %>% 
+  # Convert chromosome number to a factor so each chromosome gets a distinct color
   mutate(CHR = as.factor(CHR)) %>% 
   arrange(CHR,BP) %>% 
+  #chromosome numbers have been multiplied by 100 million to separate them visually on the graph
   mutate(Chromosome_Position = as.numeric(CHR)*1000000000+BP) %>% 
-  #chromosome numbers have been multiplied by 1 million to separate them visually on the graph
+  
+  #y intercept denotes a line of significance; from the article we pulled the data from, the line was
   ggplot(aes(Chromosome_Position, -log10(P), color= CHR))+
   geom_point(alpha=0.5) + geom_hline(yintercept = 7.30102999566, color = 'darkblue', size = 0.5, alpha = 0.5)
-#y intercept denotes a line of significance; from the article we pulled the data from, the line was
-#p-value of 5^(10^(-8)) or lower
+  #p-value of 5^(10^(-8)) or lower
 
 ```
 
@@ -28,6 +30,7 @@ Xanax %>%
   select(SNP, CHR, BP, P) %>% 
   mutate(CHR = as.factor(CHR)) %>% 
   arrange(CHR,BP) %>% 
+  # plots split into one panel per chromosome for easier per-chromosome reading
   ggplot(aes(BP, -log10(P), color= CHR))+
   geom_point(alpha=0.5)+
   facet_wrap(~CHR)
