@@ -101,6 +101,36 @@ chr_distances_2
 
 ```
 
+```{r}
+
+closepairs <- list()
+
+#loops through chr_distances_1 and 2, pulls out rows (SNPS) classified as very close, and adds that SNP
+#and the next (very close to each other) as well as the chromosome number to a list (dictionary)
+
+for (i in 1:length(chr_distances_1$Classification)) {
+  if (chr_distances_1$Classification[i] == 'very close') {
+    closepairs <- append(closepairs, list(c(chr_distances_1$CHR[i], chr_distances_1$SNP[i], chr_distances_1$SNP[i+1]))) ;
+  }
+}
+
+
+for (i in 1:length(chr_distances_2$Classification)) {
+  if (chr_distances_2$Classification[i] == 'very close') {
+    closepairs <- append(closepairs, list(c(chr_distances_2$CHR[i], chr_distances_2$SNP[i], chr_distances_2$SNP[i+1]))) ;
+  }
+}
+
+closepairs
+
+
+
+```
+
+
+
+
+
 ---------------This is for analysis with the volcano plot------------------
 
 ```{r}
@@ -135,14 +165,7 @@ distance_table
 ```
 
 ```{r}
-targetx <- c()
-for (i in 1:length(distance_table$Classification)) {
-  if (distance_table$Classification[i] == 'very close') {
-    targetx <- c(targetx, i);
-  }
-}
 
-targetx
 
 ```
 
