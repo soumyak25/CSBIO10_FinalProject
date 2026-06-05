@@ -54,6 +54,10 @@ chr_distances_1
 ```
 
 
+Above is distance table 1 (Chromosomes 1-10)
+Below is distance table 2 (Chromosomes 11-22)
+
+
 ```{r}
 #new empty list thats going to hold all chromosome distances, each entry is a dataframe
 chr_distances_2 <- list()
@@ -101,6 +105,10 @@ chr_distances_2
 
 ```
 
+
+
+
+CREATING A LIST/DICTIONARY FOR VERY CLOSE PAIRS BELOW
 ```{r}
 
 closepairs <- list()
