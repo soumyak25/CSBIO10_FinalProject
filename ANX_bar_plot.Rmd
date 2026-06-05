@@ -150,6 +150,20 @@ distance_table <- distance_table %>%
 
 distance_table
 ```
+
+```{r}
+targetx <- c()
+for (i in 1:length(distance_table$Classification)) {
+  if (distance_table$Classification[i] == 'very close') {
+    targetx <- c(targetx, i);
+  }
+}
+
+targetx
+
+```
+
+
 ```{r}
 snippers <- c("rs58825580", "rs7110863",  "rs10959883", "rs11241568", "rs4976976",  "rs10476497", "rs77960")
 snippers
