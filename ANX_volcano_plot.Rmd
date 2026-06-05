@@ -4,10 +4,6 @@ output: html_document
 author: Soumya Kalle
 ---
 
-```{r}
-print("Hello, world!")
-```
-
 Step 1: Load Anxiety GWAS dataset
 ```{r}
 install.packages("readxl")
@@ -23,7 +19,6 @@ Step 2: Get rid of unnecessary (for our purposes) columns
 ANX_dataset <- ANX_dataset[, -c(11:23)]
 ANX_dataset
 ```
-
 
 Step 3: Subset the data by adjusting and filtering p-values
 First, Benjamin-Hochberg
@@ -74,7 +69,7 @@ ANX_dataset$Tier <- "Benjamin-Hochberg (Pink)"
 ANX_dataset$Tier[ANX_dataset$P < (0.05 / 1320)] <- "Bonferroni (Purple)" 
       # Now, only PVals under the Bonferroni Threshold are labeled 
 
-# Steo 4: Plot the Volcano
+# Step 4: Plot the Volcano
 ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
   geom_point(alpha = 0.8, size = 2) +
   geom_hline(yintercept = bh_thresh, linetype = "dashed") + # Lower line
@@ -96,6 +91,8 @@ This Volcano plot visualize the risk and protective factors of each SNPs in the 
 
 
 From this plot, we reaffirm that all the SNPs used in this GWAS studied were properly adjusted, as all p-values pass the Benjamin-Hochberg test. In addition, the more we can see a majority of the SNPs also have a significant p-value when adjusted with the Bonferroni correction as well. From the Volcano-plot, we are able to visualize THE MOST significant SNPs. We can cross-references these SNPs with those discovered as most significantly associated with ANX in the study. 
+
+#-------------------------GENERATING THE VOLCANO PLOT (fig. 2)--------------------------
 
 ```{r}
 install.packages("ggrepel")
@@ -137,12 +134,15 @@ ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
        subtitle = "Visualizes the protective and risk factors of each SNPs in the GWAS study."
        )
 ```
+
 Interesting further study ==> are the labeled SNPs physically close together on certain chromosomes?
+See ANX_bar_plot file for analysis
 
 ```{r}
-sig_SNPs <- ANX_dataset$Label
-sig_SNPs <- sig_SNPs[!is.na(sig_SNPs)]
-sig_SNPs
+# create a vector of SNPs we labeled to use in the ANX_bar_plot
+sig_from_volcano <- ANX_dataset$Label
+sig_from_volcano <- sig_from_volcano[!is.na(sig_from_volcano)]
+sig_from_volcano
 
 ```
 
