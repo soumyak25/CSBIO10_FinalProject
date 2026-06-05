@@ -104,20 +104,23 @@ chr_distances_2
 ```{r}
 
 closepairs <- list()
+close_SNPs <- c()
 
 #loops through chr_distances_1 and 2, pulls out rows (SNPS) classified as very close, and adds that SNP
 #and the next (very close to each other) as well as the chromosome number to a list (dictionary)
 
 for (i in 1:length(chr_distances_1$Classification)) {
   if (chr_distances_1$Classification[i] == 'very close') {
-    closepairs <- append(closepairs, list(c(chr_distances_1$CHR[i], chr_distances_1$SNP[i], chr_distances_1$SNP[i+1]))) ;
+    closepairs <- append(closepairs, list(c(chr_distances_1$CHR[i], chr_distances_1$SNP[i], chr_distances_1$SNP[i+1])))
+    close_SNPs <- append(volcano_SNP_overlaps, chr_distances_1$SNP[i])
   }
 }
 
 
 for (i in 1:length(chr_distances_2$Classification)) {
   if (chr_distances_2$Classification[i] == 'very close') {
-    closepairs <- append(closepairs, list(c(chr_distances_2$CHR[i], chr_distances_2$SNP[i], chr_distances_2$SNP[i+1]))) ;
+    closepairs <- append(closepairs, list(c(chr_distances_2$CHR[i], chr_distances_2$SNP[i], chr_distances_2$SNP[i+1]))) 
+    close_SNPs <- append(volcano_SNP_overlaps, chr_distances_2$SNP[i])
   }
 }
 
@@ -125,6 +128,19 @@ closepairs
 
 
 
+```
+```{r}
+ 
+sig_from_volcano <- c("rs58825580", "rs7110863",  "rs10959883", "rs11241568", "rs4976976",  "rs10476497", "rs77960")
+overlaps <- c()
+for (i in 1:length(close_SNPs)) {
+  for (j in 1:length(sig_from_volcano)) {
+    if (sig_from_volcano[j] == close_SNPs[i]) {
+    overlaps <- append(overlaps, close_SNPs[i])
+    }
+  }
+}
+overlaps
 ```
 
 
@@ -166,15 +182,7 @@ distance_table
 
 
 ```{r}
-snippers <- c("rs58825580", "rs7110863",  "rs10959883", "rs11241568", "rs4976976",  "rs10476497", "rs77960")
-snippers
-snppydoo <- c()
-for (i in 1:length(distance_table$SNP)) {
-  for (j in 1:length(snippers)) {
-    append(snppydoo, distance_table$SNP == i)
-  }
-}
-snppydoo
+
 ```
 ```
 
