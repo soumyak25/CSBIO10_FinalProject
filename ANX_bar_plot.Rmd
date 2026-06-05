@@ -1,5 +1,5 @@
 ---
-title: "chr"
+title: "ANX_bar_plot"
 output: html_document
 ---
 
@@ -130,7 +130,6 @@ closepairs
 
 
 
-
 ---------------This is for analysis with the volcano plot------------------
 
 ```{r}
@@ -164,10 +163,6 @@ distance_table <- distance_table %>%
 distance_table
 ```
 
-```{r}
-
-
-```
 
 
 ```{r}
