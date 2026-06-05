@@ -9,7 +9,7 @@ author: Soumya Kalle
 Since we focusing on OR values so much, we should check that our data is not biased.
 A common plot for meta-analyses is a simple Funnel Plot
 
-#-----------Generating Funnel Plot (Suppl. fig. 2)------------
+#-----------Generating Funnel Plot (Suppl. fig. 2a)------------
 ```{r}
 library(ggplot2)
 ANX_full_dataset$logOR <- log(ANX_dataset$OR)
@@ -43,6 +43,9 @@ theme(
     legend.text = element_text(face = "bold")
   )
 ```
+
+#-----------Generating Metafor Funnel Plot (Suppl. fig. 2b)------------
+
 ```{r}
 install.packages("metafor")
 library(metafor)
