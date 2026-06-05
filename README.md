@@ -17,12 +17,12 @@ Analysis of Gene Variants Associated with Anxiety Disorders in a GWAS Study
 
 ### Manhattan Plot
 
-*Julia: 1) the inspiration + how you made your own, 2) next steps*
+*Julia: 1) the inspiration + how you made your own, 2) next steps, 3) mention intermediary plots*
 
 
 ### Volcano Plot
 
-*Soumya: 1) BH vs Bon, 2) what is a volcano plot (pval vs OR), 3) conclusion* 
+*Soumya: 1) BH vs Bon, 2) what is a volcano plot (pval vs OR), 3) conclusion, 4) MA plot?* 
 
 ### Bar graph
 
@@ -32,7 +32,7 @@ Analysis of Gene Variants Associated with Anxiety Disorders in a GWAS Study
 
 *Ananya & Eva: Subsetting all the tables and creating a list (dictionary)*
 
-*Others eventually: Plotting the bar graph*
+*Others eventually: Write about plotting the bar graph and about the intermediary plots*
 
 ## **Citations**
 GWAS Study and Dataset:
