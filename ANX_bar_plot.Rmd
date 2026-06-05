@@ -87,10 +87,10 @@ chr_distances_2 <- do.call(rbind, chr_distances_2)
 chr_distances_2 <- chr_distances_2 %>% 
   mutate(
     Classification = case_when(
-      Distance < 20000                  ~ "very close",
-      Distance >= 20000 & Distance < 100000   ~ "close",
-      Distance >= 100000 & Distance < 1000000 ~ "far",
-      Distance >= 1000000               ~ "very far"
+      BP_distance < 20000                  ~ "very close",
+      BP_distance >= 20000 & BP_distance < 100000   ~ "close",
+      BP_distance >= 100000 & BP_distance < 1000000 ~ "far",
+      BP_distance >= 1000000               ~ "very far"
     )
   )
 
