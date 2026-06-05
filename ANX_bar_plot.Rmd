@@ -72,7 +72,7 @@ for(chr_num in 11:22){
       SNP = chr_data$SNP[-nrow(chr_data)],   # all SNPs except the last one
       curr_SNP_pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
       next_SNP_pos = chr_data$BP[-1],            # all positions except the first one
-      Distance = diff(chr_data$BP)           # distance between neighboring SNPs
+      BP_distance = diff(chr_data$BP)           # distance between neighboring SNPs
     )
     
     # 4. Store this chromosome's distance table in the list
@@ -114,7 +114,7 @@ chr1_data <- Xanax %>%
 SNP <- c(chr1_data$SNP[-nrow(chr1_data)])
 Current_Pos <- c(chr1_data$BP[-nrow(chr1_data)]) # All positions except the very last
 Next_Pos <- c(chr1_data$BP[-1])                # All positions except the very first
-Distance <- c(diff(chr1_data$BP))            # The calculated physical distance
+BP_distance <- c(diff(chr1_data$BP))            # The calculated physical distance
 
 distance_table <- data.frame(SNP, Current_Pos, Next_Pos, Distance)
 distance_table
