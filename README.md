@@ -5,7 +5,7 @@ Analysis of Gene Variants Associated with Anxiety Disorders in a GWAS Study
 
 **Professor**: Dr. Christy Lee @ UCLA
 
-## **Data Pre-Processing**
+## **Research Question***
 
 *Jackie: Research question*
 
