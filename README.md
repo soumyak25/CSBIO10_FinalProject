@@ -7,6 +7,10 @@ Analysis of Gene Variants Associated with Anxiety Disorders in a GWAS Study
 
 ## **Data Pre-Processing**
 
+*Jackie: Research question*
+
+## **Data Pre-Processing**
+
 *Soumya* 
 
 ## **Methodology**
