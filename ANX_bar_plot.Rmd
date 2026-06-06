@@ -124,7 +124,7 @@ volcano_SNP_overlaps <- c()
 
 for (i in 1:length(chr_distances_1$Classification)) {
   if (chr_distances_1$Classification[i] == 'very close') {
-    closepairs <- append(closepairs, list(c(chr_distances_1$CHR[i], chr_distances_1$SNP[i], chr_distances_1$SNP[i+1])))
+    closepairs <- append(closepairs, list(c(chr_distances_1$CHR[i], chr_distances_1$SNP[i], chr_distances_1$PVal[i], chr_distances_1$SNP[i+1], chr_distances_1$PVal[i+1])))
     close_SNPs <- append(volcano_SNP_overlaps, chr_distances_1$SNP[i])
   }
 }
@@ -132,7 +132,7 @@ for (i in 1:length(chr_distances_1$Classification)) {
 
 for (i in 1:length(chr_distances_2$Classification)) {
   if (chr_distances_2$Classification[i] == 'very close') {
-    closepairs <- append(closepairs, list(c(chr_distances_2$CHR[i], chr_distances_2$SNP[i], chr_distances_2$SNP[i+1]))) 
+    closepairs <- append(closepairs, list(c(chr_distances_2$CHR[i], chr_distances_2$SNP[i], chr_distances_2$PVal[i], chr_distances_2$SNP[i+1], chr_distances_2$PVal[i+1]))) 
     close_SNPs <- append(volcano_SNP_overlaps, chr_distances_2$SNP[i])
   }
 }
@@ -143,7 +143,7 @@ closepairs
 
 ```{r}
 pairdf <- as.data.frame(do.call(rbind, closepairs))
-colnames(pairdf) <- c('Chromosome', 'SNP 1', 'SNP 2')
+colnames(pairdf) <- c('Chromosome', 'SNP1', 'Pval1', 'SNP2', 'Pval2')
 
 
 pairdf$Pair <- paste0("Pair", 1:nrow(pairdf), " CHR ", pairdf$Chromosome)
