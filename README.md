@@ -5,26 +5,95 @@ Analysis of Gene Variants Associated with Anxiety Disorders in a GWAS Study
 
 **Professor**: Dr. Christy Lee @ UCLA
 
-## **Research Question***
+## **Research Question**
 
 *Jackie: Research question*
 
 ## **Data Pre-Processing**
 
-*Soumya* 
+Size of original dataset — — —
+
+* 1321 x 23
+* 2.7 MB
+
+
+Features of Interest — — —
+
+* SNP
+* Chromosome
+* Base Pair Position
+* Odds Ratio (protective vs risk-increasing variant)
+* Standard Error Associated with the Odds Ratio
+
+Each plot (see below) requires additional processing
 
 ## **Methodology**
 
-### Manhattan Plot
+### Manhattan Plot 
 
 *Julia: 1) the inspiration + how you made your own, 2) next steps, 3) mention intermediary plots*
 
+### Funnel Plot    
+#### **Motivation — — —**
 
-### Volcano Plot
+Since we are focusing on Odds Ratios (OR)  so much, we should check that our data is not biased.
+A common plot for meta-analyses is a simple Funnel Plot.
 
-*Soumya: 1) BH vs Bon, 2) what is a volcano plot (pval vs OR), 3) conclusion, 4) MA plot?* 
+#### **Generating the Plot — — —**
 
-### Bar graph
+A funnel plot requires each log(OR) to be plotted against its respective Standard Error (SE).
+1. x-axis: log(OR)
+2. y-axis: SE
+
+To create a funnel shape, the y-axis is reversed
+
+Next, plot the bounds of the funnel (we choose 95% confidence). If the plot is symmetric, the meta-analysis is unbiased. 
+
+#### **Analysis — — —**
+
+Our plot is symmetric and therefore unbiased. Thus, we can confidently use the OR feature for later analysis.
+
+### Volcano Plot    
+
+#### **Statistics — — —**
+1. Add 2 columns for the p-values (P) adjusted for Benjamin-Hochberg (BH) and Bonferroni (Bon), respectively.
+2. Subset the dataset for  p-values < 0.05
+   
+   * The Bonferroni Correction subsetted away around 500 SNPs
+3. The Odds Ratio (OR) is a score of whether a SNP has: 
+   * higher odds (OR > 1),
+   * lower odds (OR < 1),
+   * or no association (OR = 1) 
+   of the outcome being ANX.
+
+   Comparing ORs in relation to Ps helps us understand the significance of the ORs.
+  
+#### **Generating the Plot — — —**
+
+We choose to analyze the Odds Ratio to identify the most significant SNPs that increase the probability of protective or risk factors for Anxiety disorders. To do this, we plot the OR against the p-values.
+
+1. x-axis: log2(OR)
+2. y-axis: -log(P)
+
+We can also check which of the SNPs pass only the BH correction by color coding the SNPs.
+
+Finally, we can choose which SNPs we consider as most significant. We used unadjusted P < 1e-11.
+1. "rs58825580"
+2. "rs7110863"
+3. "rs10959883"
+4. "rs11241568"
+5. "rs4976976"
+6. "rs10476497"
+7. "rs77960"
+
+#### **Analysis — — —**
+
+The Volcano plot visualizes the risk and protective factors of each SNP in the GWAS studies. The rightmost SNPs, have OR > 1, meaning they have a higher probability of being associated with ANX. The uppermost SNPs, have the lowest p-values, and thus, their OR scores are most significant. From this, we can deduce which gene variants are most associated with ANX. 
+
+
+From this plot, we reaffirm that all the SNPs used in this GWAS study were properly adjusted, as all p-values pass the Benjamin-Hochberg test. In addition, the more we can see that a majority of the SNPs also have a significant p-value when adjusted with the Bonferroni correction as well. From the Volcano-plot, we are able to visualize THE MOST significant SNPs. We can cross-reference these SNPs with those discovered as most significantly associated with ANX in the study.
+ 
+### Bar graph    
 
 *Julia: Creating the distance table for chr1*
 
