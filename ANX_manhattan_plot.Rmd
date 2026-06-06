@@ -4,7 +4,7 @@ output: html_document
 author: Julia Lohman
 ---
 
-
+#------------------- Generating the Manhattan Plot (fig. 1) --------------------
 ```{r}
 # Manhattan plot of anxiety GWAS data each dot is a SNP plotted by genome position 
 library('readxl')
@@ -21,8 +21,20 @@ Xanax %>%
   
   #y intercept denotes a line of significance; from the article we pulled the data from
   #line marks the significance threshold (p < 5e-8); dots above it are significant hits.
-  ggplot(aes(Chromosome_Position, -log10(P), color= CHR))+
-  geom_point(alpha=0.5) + geom_hline(yintercept = 7.30102999566, color = 'darkblue', size = 0.5, alpha = 0.5)
+  ggplot(aes(Chromosome_Position, -log10(P), color= CHR)) +
+  geom_point(alpha=0.5) + geom_hline(yintercept = 7.30102999566, color = 'darkblue', size = 0.5, alpha = 0.5) +
+  
+  labs(title = "Manhattan Plot") +
+  
+theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(family = "serif"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold"),
+    axis.text = element_text(face = "bold"),
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(face = "bold")
+  )
  
 
 ```
