@@ -32,7 +32,7 @@ Each plot (see below) requires additional processing
 ### Manhattan Plot 
 
 *Julia: 1) the inspiration + how you made your own, 2) next steps, 3) mention intermediary plots*
-
+***
 ### Funnel Plot    
 #### **Motivation — — —**
 
@@ -52,6 +52,8 @@ Next, plot the bounds of the funnel (we choose 95% confidence). If the plot is s
 #### **Analysis — — —**
 
 Our plot is symmetric and therefore unbiased. Thus, we can confidently use the OR feature for later analysis.
+
+---
 
 ### Volcano Plot    
 
@@ -91,8 +93,20 @@ Finally, we can choose which SNPs we consider as most significant. We used unadj
 The Volcano plot visualizes the risk and protective factors of each SNP in the GWAS studies. The rightmost SNPs, have OR > 1, meaning they have a higher probability of being associated with ANX. The uppermost SNPs, have the lowest p-values, and thus, their OR scores are most significant. From this, we can deduce which gene variants are most associated with ANX. 
 
 
-From this plot, we reaffirm that all the SNPs used in this GWAS study were properly adjusted, as all p-values pass the Benjamin-Hochberg test. In addition, the more we can see that a majority of the SNPs also have a significant p-value when adjusted with the Bonferroni correction as well. From the Volcano-plot, we are able to visualize THE MOST significant SNPs. We can cross-reference these SNPs with those discovered as most significantly associated with ANX in the study.
- 
+From this plot, we reaffirm that all the SNPs used in this GWAS study were properly adjusted, as all p-values pass the Benjamin-Hochberg test. In addition, we can see that a majority of the SNPs also have a significant p-value when adjusted with the Bonferroni correction as well. From the Volcano-plot, we are able to visualize THE MOST significant SNPs. We can cross-reference these SNPs with those discovered as most significantly associated with ANX in the study.
+
+#### **Next Steps — — —**
+All the SNPs we found to be significantly associated in some capacity (protective or risk) are not only phenotypically linked to ANX but also to various other conditions, such as cognitive, psychiatric, and cardiometabolic traits.
+
+I found the link between ANX and cardiometabolic health interesting. There is literature exploring how cardiovascular drugs can double as anxiety therapies:
+
+    Repova, K., Aziriova, S., Krajcirovicova, K., & Simko, F. (2022). Cardiovascular therapeutics: A new potential for                                  anxiety treatment?. Medicinal research reviews, 42(3), 1202–1245. 
+             https://doi.org/10.1002/med.21875
+          
+I tried long and hard to find a dataset of persons with ANX taking a CV medication vs a placebo and resultant ANX levels. I could not find such publicly available datasets. Further study of this or designing a similar experiment could be interesting for further analysis. 
+
+---
+
 ### Bar graph    
 
 *Julia: Creating the distance table for chr1*
