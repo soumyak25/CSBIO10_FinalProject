@@ -4,26 +4,21 @@ output: html_document
 author: Soumya Kalle
 ---
 
-```{r}
-print("Hello, world!")
-```
-
 Step 1: Load Anxiety GWAS dataset
 ```{r}
 install.packages("readxl")
 library('readxl')
 
-ANX_dataset <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
-ANX_dataset
+ANX_full_dataset <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
+ANX_full_dataset
 # Anxiety Dataset: 1320 x 23
 
 ```
 Step 2: Get rid of unnecessary (for our purposes) columns
 ```{r}
-ANX_dataset <- ANX_dataset[, -c(11:23)]
+ANX_dataset <- ANX_full_dataset[, -c(11:23)]
 ANX_dataset
 ```
-
 
 Step 3: Subset the data by adjusting and filtering p-values
 First, Benjamin-Hochberg
@@ -59,7 +54,7 @@ library(ggplot2)
 # Step 1: Transform the the OR and PVals
 # Taking the log of both OR and PVals help the visualization to be more clear and discernable
 ANX_dataset$logP <- -log10(ANX_dataset$P)
-ANX_dataset$logOR <- log2(ANX_dataset$OR)
+ANX_dataset$log2OR <- log2(ANX_dataset$OR)
 
 # Step 2: Calculate the BH/Bon thresholds (converted to -log10 scale for the Y-axis)
 bh_thresh <- -log10(max(ANX_dataset$P[ANX_dataset$BH_P < 0.05])) 
@@ -74,13 +69,13 @@ ANX_dataset$Tier <- "Benjamin-Hochberg (Pink)"
 ANX_dataset$Tier[ANX_dataset$P < (0.05 / 1320)] <- "Bonferroni (Purple)" 
       # Now, only PVals under the Bonferroni Threshold are labeled 
 
-# Steo 4: Plot the Volcano
-ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
+# Step 4: Plot the Volcano
+ggplot(ANX_dataset, aes(x = log2OR, y = logP, color = Tier)) +
   geom_point(alpha = 0.8, size = 2) +
   geom_hline(yintercept = bh_thresh, linetype = "dashed") + # Lower line
   geom_hline(yintercept = bonf_thresh, linetype = "solid") + # Upper line
   geom_vline(xintercept = 0, linetype = "solid", color = "black") + # OR divide line
-  theme_minimal(base_family = "serif") +
+  theme_minimal() +
   scale_color_manual(values = c(
     "Benjamin-Hochberg (Pink)" = "pink",
     "Bonferroni (Purple)" = "#925EFF"
@@ -96,6 +91,8 @@ This Volcano plot visualize the risk and protective factors of each SNPs in the 
 
 
 From this plot, we reaffirm that all the SNPs used in this GWAS studied were properly adjusted, as all p-values pass the Benjamin-Hochberg test. In addition, the more we can see a majority of the SNPs also have a significant p-value when adjusted with the Bonferroni correction as well. From the Volcano-plot, we are able to visualize THE MOST significant SNPs. We can cross-references these SNPs with those discovered as most significantly associated with ANX in the study. 
+
+#-------------------------GENERATING THE VOLCANO PLOT (fig. 2)--------------------------
 
 ```{r}
 install.packages("ggrepel")
@@ -114,38 +111,54 @@ ANX_dataset$Label[label_filter] <- ANX_dataset$SNP[label_filter]
 ```
 
 ```{r}
-ggplot(ANX_dataset, aes(x = logOR, y = logP, color = Tier)) +
-  geom_point(alpha = 0.8, size = 2) +
+ggplot(ANX_dataset, aes(x = log2OR, y = logP, color = Tier)) +
+  geom_point(alpha = 0.6, size = 2) +
   
   geom_text_repel(aes(label = Label), 
-                  color = "black",       # Keeps the text black so it's easy to read
-                  box.padding = 0.5,     # Gives the text bubbles some breathing room
-                  max.overlaps = Inf,    # Forces R to draw every label we asked for
-                  show.legend = FALSE) + # Stops the labels from messing up your legend
+                  color = "black",       # Labels are black
+                  box.padding = 0.7,     # Spcae between labels
+                  max.overlaps = Inf,    # All labels drawn
+                  show.legend = FALSE) + # Labels restricted to plot
 
   geom_hline(yintercept = bh_thresh, linetype = "dashed") + # Lower line
   geom_hline(yintercept = bonf_thresh, linetype = "solid") + # Upper line
   geom_vline(xintercept = 0, linetype = "solid", color = "black") + # OR divide line
-  theme_minimal(base_family = "serif") +
+  theme_minimal() +
   scale_color_manual(values = c(
     "Benjamin-Hochberg (Pink)" = "pink",
     "Bonferroni (Purple)" = "#925EFF"
     )) +
-  labs(title = "ANX Volcano Plot",
+  labs(title = "Volcano Plot: Significance of H/L Odds of ANX Association",
        x = "Log2(Odds Ratio)",
        y = "-Log10(P-value)",
        subtitle = "Visualizes the protective and risk factors of each SNPs in the GWAS study."
-       )
+       ) +
+theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(family = "serif"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold"),
+    axis.text = element_text(face = "bold"),
+    legend.title = element_text(face = "bold", family = "serif"),
+    legend.text = element_text(face = "bold")
+  )
 ```
+
 Interesting further study ==> are the labeled SNPs physically close together on certain chromosomes?
+See ANX_bar_plot file for analysis
 
 ```{r}
-sig_SNPs <- ANX_dataset$Label
-sig_SNPs <- sig_SNPs[!is.na(sig_SNPs)]
-sig_SNPs
+# create a vector of SNPs we labeled to use in the ANX_bar_plot
+sig_from_volcano <- ANX_dataset$Label
+sig_from_volcano <- sig_from_volcano[!is.na(sig_from_volcano)]
+sig_from_volcano
 
 ```
+All the SNPs we found to be signifcantly be associated in some capacity (protective or risk) are not only linked phenotypically to ANX but other various conditions such as cognitive, psychiatric, and cardiometabolic traits.
 
-Odds Ratio: A score for odds of association with anxiety. Greater than 1 means strong odds, less than 1 is low odds, 1 is no association (N/A)
---> scores have been normalized with log2
-P-value: Significance levels, measuring the validity of these odds values
+I found the link between ANX and cardiometabolic health interesting. There is literature exploring how cardiovascular drugs can double as anxiety therapies:
+
+  Repova, K., Aziriova, S., Krajcirovicova, K., & Simko, F. (2022). Cardiovascular therapeutics: A new potential for           anxiety treatment?. Medicinal research reviews, 42(3), 1202–1245. 
+          https://doi.org/10.1002/med.21875
+          
+I tried long and hard to find a dataset of persons with ANX taking a CV medication vs a placebo and resultant ANX levels. I could not find such publicly, and easily available datasets. However, further study into this or creating a similar experiment could be interesting further analysis. 

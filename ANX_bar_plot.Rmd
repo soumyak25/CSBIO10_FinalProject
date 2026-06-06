@@ -24,9 +24,10 @@ for(chr_num in 1:10){
     distance_table <- data.frame(
       CHR = chr_num,                         # chromosome number
       SNP = chr_data$SNP[-nrow(chr_data)],   # all SNPs except the last one
+      PVal = chr_data$P[-nrow(chr_data)],    # corresponding PVals
       curr_SNP_pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
       next_SNP_pos = chr_data$BP[-1],            # all positions except the first one
-      Distance = diff(chr_data$BP)           # distance between neighboring SNPs
+      BP_diff = diff(chr_data$BP)           # distance between neighboring SNPs
     )
     
     # 4. Store this chromosome's distance table in the list
@@ -41,10 +42,10 @@ chr_distances_1  <- do.call(rbind, chr_distances_1)
 chr_distances_1  <- chr_distances_1  %>% 
   mutate(
     Classification = case_when(
-      Distance < 20000                  ~ "very close",
-      Distance >= 20000 & Distance < 100000   ~ "close",
-      Distance >= 100000 & Distance < 1000000 ~ "far",
-      Distance >= 1000000               ~ "very far"
+      BP_diff < 20000                  ~ "very close",
+      BP_diff >= 20000 & BP_diff < 100000   ~ "close",
+      BP_diff >= 100000 & BP_diff < 1000000 ~ "far",
+      BP_diff >= 1000000               ~ "very far"
     )
   )
 
@@ -74,9 +75,10 @@ for(chr_num in 11:22){
     distance_table <- data.frame(
       CHR = chr_num,                         # chromosome number
       SNP = chr_data$SNP[-nrow(chr_data)],   # all SNPs except the last one
+      PVal = chr_data$P[-nrow(chr_data)],    # corresponding PVals
       curr_SNP_pos = chr_data$BP[-nrow(chr_data)], # all positions except the last one
       next_SNP_pos = chr_data$BP[-1],            # all positions except the first one
-      BP_distance = diff(chr_data$BP)           # distance between neighboring SNPs
+      BP_diff = diff(chr_data$BP)           # distance between neighboring SNPs
     )
     
     # 4. Store this chromosome's distance table in the list
@@ -91,10 +93,10 @@ chr_distances_2 <- do.call(rbind, chr_distances_2)
 chr_distances_2 <- chr_distances_2 %>% 
   mutate(
     Classification = case_when(
-      BP_distance < 20000                  ~ "very close",
-      BP_distance >= 20000 & BP_distance < 100000   ~ "close",
-      BP_distance >= 100000 & BP_distance < 1000000 ~ "far",
-      BP_distance >= 1000000               ~ "very far"
+      BP_diff < 20000                  ~ "very close",
+      BP_diff >= 20000 & BP_diff < 100000   ~ "close",
+      BP_diff >= 100000 & BP_diff < 1000000 ~ "far",
+      BP_diff >= 1000000               ~ "very far"
     )
   )
 
