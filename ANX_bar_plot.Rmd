@@ -113,9 +113,12 @@ CREATING A LIST/DICTIONARY FOR VERY CLOSE PAIRS BELOW
 
 closepairs <- list()
 close_SNPs <- c()
+volcano_SNP_overlaps <- c()
 
 #loops through chr_distances_1 and 2, pulls out rows (SNPS) classified as very close, and adds that SNP
 #and the next (very close to each other) as well as the chromosome number to a list (dictionary)
+
+#also adds the SNP to list volcano_SNP_overlaps to analyze/compare data with volcano plot
 
 for (i in 1:length(chr_distances_1$Classification)) {
   if (chr_distances_1$Classification[i] == 'very close') {
@@ -134,6 +137,21 @@ for (i in 1:length(chr_distances_2$Classification)) {
 
 closepairs
 ```
+
+
+```{r}
+pairdf <- as.data.frame(do.call(rbind, closepairs))
+colnames(pairdf) <- c('Chromosome', 'SNP 1', 'SNP 2')
+
+
+pairdf$Pair <- paste0("Pair", 1:nrow(pairdf), " CHR ", pairdf$Chromosome)
+pairdf
+
+#I NEED THE P-VALUES OF EACH OF THESE SNPS AS COLUMSN IN THE DF.
+
+
+```
+
 
 ```{r}
  
