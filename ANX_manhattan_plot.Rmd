@@ -36,5 +36,4 @@ theme(
     legend.text = element_text(face = "bold")
   )
  
-
 ```

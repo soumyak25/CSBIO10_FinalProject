@@ -14,7 +14,7 @@ A common plot for meta-analyses is a simple Funnel Plot
 library(ggplot2)
 ANX_full_dataset$logOR <- log(ANX_dataset$OR)
 
-# Step 2: Build the MA Plot
+# Build the Funnel Plot
 ggplot(ANX_full_dataset, aes(x = logOR, y = SE)) +
   geom_point(alpha = 0.5, color = "mediumpurple") +
   
@@ -26,8 +26,7 @@ ggplot(ANX_full_dataset, aes(x = logOR, y = SE)) +
   # For 95% confidence the standard bounds (at least for metafor library) is +- 1.96 * SE
   # cite: https://wviechtb.github.io/metafor/reference/funnel.html
   geom_abline(intercept = 0, slope = 1/1.96, linetype = "dashed", color = "hotpink") +
-  geom_abline(intercept = 0, slope = -1/1.96, linetype = "dashed", color = "hotpink") +
-
+  geom_abline(intercept = 0, slope = -1/1.96, linetype = "dashed", color = "hotpink") + 
   theme_minimal() +
   
   labs(title = "Funnel Plot: Bias in OR values",
