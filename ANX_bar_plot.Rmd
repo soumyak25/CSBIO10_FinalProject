@@ -203,32 +203,46 @@ for (i in seq(from = 1, to = 48, by = 2)) {
       genevec <- append(genevec, 'NA')
     }
 }
-abrgenevec <- genevec
-inflag <- FALSE
+genevec
+```
 
+```{r}
+gene_legend <- genevec
 
-tempvec <- (c)
-for (i in abrgenevec) {
-  if (grepl(",", abrgenevec[i])) {
-    tempvec <- split(abrgenevec, ',', drop = FALSE)
-    while () {
-      
-      if (grepl("0.0", tempvec[j]) {
-        abrgenevec[i] <- tempvec[j]
-      }
+tempvec <- c()
+num <- 1 # for annotation purposes
+
+for (i in 1:length(gene_legend)) { # for all the 24 elements in this list
+  
+  # if an element has a comma, the element has multiple genes
+  if (grepl(",", gene_legend[i])) { 
+    
+    tempvec <- trimws(unlist(strsplit(gene_legend[i], ','))) # vectorize these genes
+    zero_genes <- grep("0.0", tempvec, value = TRUE)
+    
+    # for each gene in the vectorized list && if we havent already found  0.0 gene
+    if (length(zero_genes) == 1) {
+        gene_legend[i] <- zero_genes[1]
+    } else {
+        gene_legend[i] <- paste0("[", num, "]")
+        genevec[i] <- paste0("[", num, "] ",  genevec[i])
+        num <- num + 1
+
     }
   }
 }
-genevec
+gene_legend
+```
 
 #pairdf_long <- pivot_longer(pairdf, cols = everything(), names_to = "Pair", values_to = "P_Value")
 #pairdf_long
-
-
-
-#I NEED THE P-VALUES OF EACH OF THESE SNPS AS COLUMSN IN THE DF.
+```{r}
+genevec
 ```
 
+
+
+#I NEED THE P-VALUES OF EACH OF THESE SNPS AS COLUMSN IN THE DF
 
 ```{r}
  
