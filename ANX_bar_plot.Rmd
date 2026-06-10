@@ -254,7 +254,7 @@ ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = fa
   )
 
 ```
-
+----------FIX COMMENTS AND MAKE IT BETTER-----------
 ```{r}
 # Ensure col is set up correctly (values 1 to 24)
 df_data$col <- rep(1:24, each = 2)[1:nrow(df_data)]
