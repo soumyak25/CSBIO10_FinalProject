@@ -152,6 +152,15 @@ for (i in 1:length(chr_distances_1$Classification)) {
     SNP_pval <- c(SNP_pval, chr_distances_1$PVal[i], chr_distances_1$PVal[i+1])
   }
 }
+
+for (i in 1:length(chr_distances_2$Classification)) {
+  if (chr_distances_2$Classification[i] == 'very close') {
+    SNP_names <- c(SNP_names, chr_distances_2$SNP[i], chr_distances_2$SNP[i+1])
+    SNP_pval <- c(SNP_pval, chr_distances_2$PVal[i], chr_distances_2$PVal[i+1])
+  }
+}
+SNP_names
+SNP_pval
 ```
 ```{r}
 column_list <- list(
@@ -173,7 +182,7 @@ for (i in 1:nrow(df_data)){
 }
 df_data
 
-palette_cols <- hcl.colors(20, palette = "Dynamic")
+palette_cols <- hcl.colors(30, palette = "Dynamic")
 ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = factor(col))) + geom_col() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + scale_fill_manual(values = palette_cols)
 
 ```
