@@ -7,11 +7,11 @@ Analysis of Gene Variants Associated with Anxiety Disorders in a GWAS Study
 
 ## **Research Question**
 
-*Jackie: Which genes are statistically probable to contribute to the symptoms of anxiety? *
+Which genes are statistically probable to contribute to the symptoms of anxiety? 
 
 ## **Project and Dataset Introduction**
 
-*Jackie: Anxiety affects more than 300 million people across the world. Each person is affected differently by anxiety, however these disroders likely stem from the same issue, hyper reactive threat response system. There is no singular “anxiety gene” instead its caused by hundreds of tiny scattered DNA variations, also called SNPS.  
+Anxiety affects more than 300 million people across the world. Each person is affected differently by anxiety, however these disroders likely stem from the same issue, hyper reactive threat response system. There is no singular “anxiety gene” instead its caused by hundreds of tiny scattered DNA variations, also called SNPS.  
 
 Our study uses a genome wide association study, so we are able to scan the entire genome of people. In doing this we can identify which genetic markers/SNPs are tied to anxiety. 
 
