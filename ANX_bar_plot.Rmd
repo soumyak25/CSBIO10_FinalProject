@@ -5,7 +5,7 @@ output: html_document
 
 ```{r}
 library('readxl')
-Xanax <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
+ANX_data <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
 ```
 ```{r}
 library('tidyverse')
@@ -13,7 +13,7 @@ library('tidyverse')
 chr_distances_1 <- list()
 
 for(chr_num in 1:10){
-  chr_data <- Xanax %>% 
+  chr_data <- ANX_data %>% 
     filter(CHR == chr_num) %>% 
     arrange(BP)
   # 2. Only calculate distances if there are at least 2 SNPs
@@ -64,7 +64,7 @@ Below is distance table 2 (Chromosomes 11-22)
 chr_distances_2 <- list()
 
 for(chr_num in 11:22){
-  chr_data <- Xanax %>% 
+  chr_data <- ANX_data %>% 
     filter(CHR == chr_num) %>% 
     arrange(BP)
   # 2. Only calculate distances if there are at least 2 SNPs
@@ -141,9 +141,9 @@ closepairs
 ```
 
 
-
+Examine the SNPS and PVals
 ```{r}
-Xanax <- rename(Xanax,'genelist' = 'genes.6.50kb(dist2index)')
+ANX_data <- rename(ANX_data,'genelist' = 'genes.6.50kb(dist2index)')
 SNP_names <- c()
 SNP_pval <- c()
 for (i in 1:length(chr_distances_1$Classification)) {
@@ -178,7 +178,7 @@ for (i in 1:nrow(df_data)){
     }
   }
   df_data$col[i] <- pair_num
-  df_data$genes[i] <- Xanax$genelist[Xanax$SNP == df_data$Name[i]]
+  df_data$genes[i] <- ANX_data$genelist[ANX_data$SNP == df_data$Name[i]]
 }
 df_data
 
@@ -208,6 +208,7 @@ genevec
 
 ```{r}
 gene_legend <- genevec
+gene_legend2 <-
 
 tempvec <- c()
 num <- 1 # for annotation purposes
@@ -226,12 +227,17 @@ for (i in 1:length(gene_legend)) { # for all the 24 elements in this list
     } else {
         gene_legend[i] <- paste0("[", num, "]")
         genevec[i] <- paste0("[", num, "] ",  genevec[i])
+        gene_legend2 <- append(genevec[i], gene_legend2)
         num <- num + 1
 
     }
   }
 }
 gene_legend
+
+```
+```{r}
+gene_legend2
 ```
 
 
@@ -246,12 +252,16 @@ ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = fa
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
   scale_fill_manual(
     values = palette_cols,
-    labels = gene_legend, # This assigns your custom gene names to the legend
-    name = "Genes"        # Optional: Adds a title to your legend
-  )
+    labels = gene_legend, # Each pair is assigned its Gene
+    name = "Genes"        
+  ) 
+  
 
 ```
-----------FIX COMMENTS AND MAKE IT BETTER-----------
+```{r}
+df_data
+```
+
 ```{r}
 # Ensure col is set up correctly (values 1 to 24)
 df_data$col <- rep(1:24, each = 2)[1:nrow(df_data)]

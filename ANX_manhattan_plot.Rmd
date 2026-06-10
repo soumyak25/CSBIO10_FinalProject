@@ -8,11 +8,11 @@ author: Julia Lohman
 ```{r}
 # Manhattan plot of anxiety GWAS data each dot is a SNP plotted by genome position 
 library('readxl')
-Xanax <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
+ANX_data <- read_excel('ANX_2026_daner_fullANX_v12_woUTAH_11022026.gz.p4.clump.areator.sorted.1mhc (1).xls')
 install.packages("tidyverse")
 library(ggplot2)
 library(tidyverse)
-Xanax %>%
+ANX_data %>%
   select(SNP, CHR, BP, P) %>% 
   mutate(CHR = as.factor(CHR)) %>% 
   arrange(CHR,BP) %>% 
