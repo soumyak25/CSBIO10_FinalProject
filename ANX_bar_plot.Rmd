@@ -140,6 +140,7 @@ for (i in 1:length(chr_distances_2$Classification)) {
 closepairs
 ```
 ```{r}
+Xanax <- rename(Xanax,'genelist' = 'genes.6.50kb(dist2index)')
 SNP_names <- c()
 SNP_pval <- c()
 for (i in 1:length(chr_distances_1$Classification)) {
