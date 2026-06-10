@@ -32,6 +32,7 @@ Each plot (see below) requires additional processing
 ### Manhattan Plot 
 
 *Julia: 1) the inspiration + how you made your own, 2) next steps, 3) mention intermediary plots*
+gyygyy
 ***
 ### Funnel Plot    
 #### **Motivation — — —**
