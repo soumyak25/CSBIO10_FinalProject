@@ -1,7 +1,7 @@
 # CSBIO10_FinalProject
 Analysis of Gene Variants Associated with Anxiety Disorders in a GWAS Study
 
-**Contributors**: Soumya Kalle, Ananya Atri, Yifan Zhuo, Julia Lohman, and Jacqueline Chavarry
+**Contributors**: Soumya Kalle, Ananya Atri, Yifan (Eva) Zhuo, Julia Lohman, and Jacqueline Chavarry
 
 **Professor**: Dr. Christy Lee @ UCLA
 
@@ -146,8 +146,6 @@ formatted it for ggplot2.
 *Intermediary plot*: We created an intermediary plot at this stage. It includes pair-wise graphing of 'Very Close' SNPs, separated by color.
 
 *Further Work*: We continued to refine the data frame after this, with the goal of replacing SNP names with just the gene that they are associated with. We wanted each pair of SNPs to be marked on the x-axis by only its associated gene, and we wanted to change the legend to reflect this change as well.
-
-*Others eventually: Write about plotting the bar graph and about the intermediary plots*
 
 ## **Citations**
 GWAS Study and Dataset:
