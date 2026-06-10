@@ -183,8 +183,13 @@ ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = fa
 pairdf <- as.data.frame(do.call(rbind, closepairs))
 colnames(pairdf) <- c('Chromosome', 'SNP1', 'Pval1', 'SNP2', 'Pval2')
 
+genevec <- c()
+for i in seq(from = 1, to = 48, by = 2) {
+  
+}
 
-pairdf$Pair <- paste0("Pair", 1:nrow(pairdf), " CHR ", pairdf$Chromosome)
+pairdf$genes <- grpgene
+
 pairdf
 
 #I NEED THE P-VALUES OF EACH OF THESE SNPS AS COLUMSN IN THE DF.
