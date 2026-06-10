@@ -165,7 +165,7 @@ SNP_pval
 ```{r}
 column_list <- list(
   Name = SNP_names,
-  PVal = SNP_pval
+  PVal = -log10(SNP_pval)
 )
 df_data <- as.data.frame(column_list)
 pair_num <- 1
@@ -189,15 +189,14 @@ ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = fa
 
 
 ```{r}
-library(stringr)
 pairdf <- as.data.frame(do.call(rbind, closepairs))
 colnames(pairdf) <- c('Chromosome', 'SNP1', 'Pval1', 'SNP2', 'Pval2')
 
 genevec <- c()
 for (i in seq(from = 1, to = 48, by = 2)) {
-    if (str_detect(df_data$genes[i], "(0.0)")) {
-      append(genevec, df_data$genes[i])
-    }
+    if (grepl("0.0", df_data$genes[i], fixed = TRUE)) {
+      genevec <-append(genevec, df_data$genes[i])
+    } 
 }
 genevec
 
