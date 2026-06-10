@@ -220,7 +220,7 @@ for (i in 1:length(gene_legend)) { # for all the 24 elements in this list
     tempvec <- trimws(unlist(strsplit(gene_legend[i], ','))) # vectorize these genes
     zero_genes <- grep("0.0", tempvec, value = TRUE)
     
-    # for each gene in the vectorized list && if we havent already found  0.0 gene
+    # for each gene in the vectorized list && if we haven't already found  0.0 gene
     if (length(zero_genes) == 1) {
         gene_legend[i] <- zero_genes[1]
     } else {
@@ -234,15 +234,9 @@ for (i in 1:length(gene_legend)) { # for all the 24 elements in this list
 gene_legend
 ```
 
-#pairdf_long <- pivot_longer(pairdf, cols = everything(), names_to = "Pair", values_to = "P_Value")
-#pairdf_long
 ```{r}
 genevec
 ```
-
-
-
-#I NEED THE P-VALUES OF EACH OF THESE SNPS AS COLUMSN IN THE DF
 
 ```{r}
  
