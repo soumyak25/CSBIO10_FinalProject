@@ -30,9 +30,15 @@ Each plot (see below) requires additional processing
 ## **Methodology**
 
 ### Manhattan Plot 
+*Overview*:
 
-*Julia: 1) the inspiration + how you made your own, 2) next steps, 3) mention intermediary plots*
-First, I subsetted the data so that we only had the columns SNP, CHR, BP, and P-values. The I made the chromosome number be recognized as a discrete number instead of continuous. This was so that I could arrange the base pairs to be matched with their corresponding chromosomes. Then I needed to make sure that the base positions weren't overlapping (because base position restarts with every chromosome), so I multiplied each chromosome number by 1,000,000,000 and added the base positions so that I could plot all of the SNPs on one continuous x-axis. Each color corresponds to a chromosome, and the y-axis is the -log10(p-values) so that it is easier to interpret. The dark blue line that goes across the graph, which signifies our significance level. I did do a facet wrap so that we could visualize each chromosome independently, however the result was cramped and looked rather unpleasent so I decided not to proceed in that direction.
+The purpose of the Manhattan plot was to graph each SNP in the data and note its p-value. We wanted to identify p-values of SNPs that were particularly significant, as well as the relevant chromosomes that resulted in these significant values. 
+
+*Process and Details*: 
+
+We subsetted the data so that we only had the columns SNP, CHR, BP, and P-values, and made the chromosome number be recognized as a discrete number instead of continuous. This was so that we could arrange the base pairs to be matched with their corresponding chromosomes. To make sure that the base positions weren't overlapping (because base position restarts with every chromosome), we multiplied each chromosome number by 1,000,000,000 and added the base positions so that we could plot all of the SNPs on one continuous x-axis. 
+
+Each color corresponds to a chromosome, and the y-axis is the -log10(p-values) so that it is easier to interpret. The dark blue line that goes across the graph, which signifies our significance level. While we used a facet wrap so that we could visualize each chromosome independently, the result was cramped; we left that plot in a scratch file.
 ***
 ### Funnel Plot    
 #### **Motivation — — —**
@@ -145,12 +151,9 @@ GWAS Study and Dataset:
 
 SNP Base Pair Position Pair Distance Classifications:
 
-Average gene size - Human Homo sapiens - BNID 105336. (2026). Harvard.edu. https://bionumbers.hms.harvard.edu/bionumber.aspx?id=105336&ver=6Linkage Disequilibrium 101: What LD Measures and 
-When It Matters. (2019). Cd-Genomics.com. https://www.cd-genomics.com/pop-genomics/resources/linkage-disequilibrium-overview.html
+Average gene size - Human Homo sapiens - BNID 105336. (2026). Harvard.edu. https://bionumbers.hms.harvard.edu/bionumber.aspx?id=105336&ver=6
 
-The Genes on Which the Significant SNPs Exist, According to the Volcano Plot:
-
-*Eva: cite*
+Linkage Disequilibrium 101: What LD Measures and When It Matters. (2019). Cd-Genomics.com. https://www.cd-genomics.com/pop-genomics/resources/linkage-disequilibrium-overview.html
 
 
 
