@@ -120,7 +120,13 @@ We made a bar graph of very close SNP pairs and their p-values, colored to diffe
 
 *Jackie: Creating the distance table for all chromosomes*
 
-*Ananya & Eva: Subsetting all the tables and creating a list (dictionary)*
+*Subsetting all the tables and creating a list*
+We subsetted the distance table and pulled out close pairs of SNPs; we added these pairs of SNPs, their p-values, and the genes
+they are located on to an R dictionary (list). We then created a data frame containing this information, and formatted it for ggplot2. 
+
+*Intermediary plot*: We created an intermediary plot at this stage. It includes pair-wise graphing of 'Very Close' SNPs, separated by color.
+
+*Further Work*: We continued to refine the data frame after this, with the goal of replacing SNP names with just the gene that they are associated with. We wanted each pair of SNPs to be marked on the x-axis by only its associated gene, and we wanted to change the legend to reflect this change as well.
 
 *Others eventually: Write about plotting the bar graph and about the intermediary plots*
 
