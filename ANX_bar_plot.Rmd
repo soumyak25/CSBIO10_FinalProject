@@ -139,6 +139,40 @@ for (i in 1:length(chr_distances_2$Classification)) {
 
 closepairs
 ```
+```{r}
+SNP_names <- c()
+SNP_pval <- c()
+for (i in 1:length(chr_distances_1$Classification)) {
+  if (chr_distances_1$Classification[i] == 'very close') {
+    SNP_names <- c(SNP_names, chr_distances_1$SNP[i], chr_distances_1$SNP[i+1])
+    SNP_pval <- c(SNP_pval, chr_distances_1$PVal[i], chr_distances_1$PVal[i+1])
+  }
+}
+```
+```{r}
+column_list <- list(
+  Name = SNP_names,
+  PVal = SNP_pval
+)
+df_data <- as.data.frame(column_list)
+pair_num <- 1
+df_data$col <- 1
+df_data$genes <- NA
+for (i in 1:nrow(df_data)){
+  if (i > 2){
+    if (df_data$col[i-1] == df_data$col[i-2]){
+        pair_num <- pair_num + 1
+    }
+  }
+  df_data$col[i] <- pair_num
+  df_data$genes[i] <- Xanax$genelist[Xanax$SNP == df_data$Name[i]]
+}
+df_data
+
+palette_cols <- hcl.colors(20, palette = "Dynamic")
+ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = factor(col))) + geom_col() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + scale_fill_manual(values = palette_cols)
+
+```
 
 
 ```{r}
