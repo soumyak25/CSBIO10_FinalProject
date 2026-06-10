@@ -7,7 +7,14 @@ Analysis of Gene Variants Associated with Anxiety Disorders in a GWAS Study
 
 ## **Research Question**
 
-*Jackie: Research question*
+Which genes are statistically probable to contribute to the symptoms of anxiety? 
+
+## **Project and Dataset Introduction**
+
+Anxiety affects more than 300 million people across the world. Each person is affected differently by anxiety, however these disroders likely stem from the same issue, hyper reactive threat response system. There is no singular “anxiety gene” instead its caused by hundreds of tiny scattered DNA variations, also called SNPS.  
+
+Our study uses a genome wide association study, so we are able to scan the entire genome of people. In doing this we can identify which genetic markers/SNPs are tied to anxiety. 
+
 
 ## **Data Pre-Processing**
 
@@ -30,9 +37,15 @@ Each plot (see below) requires additional processing
 ## **Methodology**
 
 ### Manhattan Plot 
+*Overview*:
 
-*Julia: 1) the inspiration + how you made your own, 2) next steps, 3) mention intermediary plots*
-gyygyy
+The purpose of the Manhattan plot was to graph each SNP in the data and note its p-value. We wanted to identify p-values of SNPs that were particularly significant, as well as the relevant chromosomes that resulted in these significant values. 
+
+*Process and Details*: 
+
+We subsetted the data so that we only had the columns SNP, CHR, BP, and P-values, and made the chromosome number be recognized as a discrete number instead of continuous. This was so that we could arrange the base pairs to be matched with their corresponding chromosomes. To make sure that the base positions weren't overlapping (because base position restarts with every chromosome), we multiplied each chromosome number by 1,000,000,000 and added the base positions so that we could plot all of the SNPs on one continuous x-axis. 
+
+Each color corresponds to a chromosome, and the y-axis is the -log10(p-values) so that it is easier to interpret. The dark blue line that goes across the graph, signifies our significance level. While we attempted to use a facet wrap so that we could visualize each chromosome independently, the result was cramped; we left that plot in a scratch file.
 ***
 ### Funnel Plot    
 #### **Motivation — — —**
@@ -112,14 +125,21 @@ I tried long and hard to find a dataset of persons with ANX taking a CV medicati
 
 #### **Generating the Plot — — —**
 
-We are looking at the SNP pairs that are very close to each other in terms of distance. We want to see if the SNPs in the same pair are both significant and are on the same genes. If they are on the same genes and at least one of them is significant, they can be used as potential markers in the future disease studies to study genes related to anxiety.
+We are looking at the SNP pairs that are very close to each other in terms of distance. We want to see if the SNPs in the same pair are both significant and are on the same genes. If they are on the same genes and at least one of them is significant, they can be used as potential markers in future disease studies to study genes related to anxiety.
 
-We made a bar graph of very close SNP pairs and their p-values, colored to differentiate the pairs.
+We made a bar graph of very close SNP pairs and their p-values, with colors to distinguish the pairs.
 
 
-*Julia: Creating the distance table for chr1*
+*Creating the distance table for chr1*
+When doing the Manhattan Plot, we saw some overlap in the points that marked the SNPs of interest, and wondered if the distance between any of them were actually close enough to make an impact. We then made a table that listed the differences between each base position and then classified them by the amount of nucleotides they were away. 
 
-*Jackie: Creating the distance table for all chromosomes*
+The categories were: "very far, (distance over 1,000,000 bp away), "far" (1,000,000 - 100,000) "close" (20,000 - 100,000) and "very close" (less than 20,000). The categories represent, respectively: unrelated, on the same chromosome, genetic cluster/linkage disequilibrium, and inside the same gene. For simplicity, we split the table into two (and started by only analyzing chromosomes 1-10, but we eventually analyzed the remaining ones as well.
+
+
+*Creating the distance table for all chromosomes*
+After making the first distance table for chr1, we expanded the code so that we could calculate distances across all chromosomes. We created an empty list then used a for loop to go through chromosomes 1-10. For each chromosome, the dataset was filtered to only include SNPs from that chromsome and then arragned by base-pair position. Then each SNP was compared to the SNP directly after it and the distance was calculated between the two. Each chromsomes's distance table was saved into the list, and then all of the individual chromosome tables were combined into one larger data frame.
+
+After making thee full distance table, we classified each SNP pair using the same distance categories as before. Then the process was repeated fro chromosmes 11-22 so that we could analyze the rest of the dataset. This gave a complete distance table acorss all chromosomes, which we sued to identify the SNP pairs that were physically closest together and focus on the "very close" paris for later gene and signifigance analysis
 
 *Subsetting all the tables and creating a list*: We subsetted the distance table and pulled out close pairs of SNPs; we added these pairs of SNPs, their p-values, and the genes they are located on to an R dictionary (list). We then created a data frame containing this information, and 
 formatted it for ggplot2. 
@@ -143,11 +163,9 @@ GWAS Study and Dataset:
 
 SNP Base Pair Position Pair Distance Classifications:
 
-*Julia: cite*
+Average gene size - Human Homo sapiens - BNID 105336. (2026). Harvard.edu. https://bionumbers.hms.harvard.edu/bionumber.aspx?id=105336&ver=6
 
-The Genes on Which the Significant SNPs Exist, According to the Volcano Plot:
-
-*Eva: cite*
+Linkage Disequilibrium 101: What LD Measures and When It Matters. (2019). Cd-Genomics.com. https://www.cd-genomics.com/pop-genomics/resources/linkage-disequilibrium-overview.html
 
 
 
