@@ -109,6 +109,13 @@ I tried long and hard to find a dataset of persons with ANX taking a CV medicati
 
 ### Bar graph    
 
+#### **Generating the Plot — — —**
+
+We are looking at the SNP pairs that are very close to each other in terms of distance. We want to see if the SNPs in the same pair are both significant and are on the same genes. If they are on the same genes and at least one of them is significant, they can be used as potential markers in the future disease studies to study genes related to anxiety.
+
+We made a bar graph of very close SNP pairs and their p-values, colored to differentiate the pairs.
+
+
 *Julia: Creating the distance table for chr1*
 
 *Jackie: Creating the distance table for all chromosomes*
