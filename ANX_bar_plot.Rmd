@@ -162,6 +162,7 @@ for (i in 1:length(chr_distances_2$Classification)) {
 SNP_names
 SNP_pval
 ```
+Graph Plot 3 so far by factoring pairs
 ```{r}
 column_list <- list(
   Name = SNP_names,
@@ -187,7 +188,7 @@ ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = fa
 
 ```
 
-
+The genes list for each pair
 ```{r}
 library(stringr)
 library(tidyr)
@@ -195,9 +196,9 @@ pairdf <- as.data.frame(do.call(rbind, closepairs))
 colnames(pairdf) <- c('Chromosome', 'SNP1', 'Pval1', 'SNP2', 'Pval2')
 
 genevec <- c()
-for (i in seq(from = 1, to = 48, by = 2)) {
+for (i in seq(from = 1, to = 48, by = 2)) { #Only every two because each 2 rows is one pair
     if (grepl("0.0", df_data$genes[i], fixed = TRUE)) {
-      genevec <-append(genevec, df_data$genes[i])
+      genevec <- append(genevec, df_data$genes[i])
     } 
     else{
       genevec <- append(genevec, 'NA')
@@ -208,7 +209,7 @@ genevec
 
 ```{r}
 gene_legend <- genevec
-gene_legend2 <-
+gene_legend2 <- c()
 
 tempvec <- c()
 num <- 1 # for annotation purposes
@@ -237,7 +238,7 @@ gene_legend
 
 ```
 ```{r}
-gene_legend2
+gene_legend2 # the full genes list
 ```
 
 
@@ -258,29 +259,27 @@ ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = fa
   
 
 ```
-```{r}
-df_data
-```
 
 ```{r}
-# Ensure col is set up correctly (values 1 to 24)
+# Create column col to set up values 1 to 24
 df_data$col <- rep(1:24, each = 2)[1:nrow(df_data)]
 
-# --- Split the Data Frame ---
+# Previous graphs we made were too complex => split in half
 df_part1 <- subset(df_data, col <= 12)
 df_part2 <- subset(df_data, col > 12)
 
-# --- Split the Color Palette ---
+# Split the color palette too
 palette_part1 <- palette_cols[1:12]
 palette_part2 <- palette_cols[13:24]
 
-# --- Split the Legend Labels ---
+# Split the legend too
 legend_part1 <- gene_legend[1:12]
 legend_part2 <- gene_legend[13:24]
 ```
 
+#-----------Generating Bar Plot (Suppl. fig. 3a)------------
 ```{r}
-# Extract every second name to use as breaks (creates a tick mark every 2 SNPs)
+# Extract every second name to use as breaks (creates a tick mark every 2 SNPs / at every pair)
 breaks_part1 <- unique(df_part1$Name)[seq(1, length(unique(df_part1$Name)), by = 2)]
 
 # Create a clean label for those ticks, like "Pair 1", "Pair 2", etc.
@@ -290,10 +289,10 @@ ggplot(df_part1, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = f
   geom_col() +  
   scale_x_discrete(
     breaks = breaks_part1,  # Forces a tick mark every 2 SNPs
-    labels = labels_part1   # Names them cleanly "Pair 1", "Pair 2"...
+    labels = labels_part1   # Names them cleanly 
   ) +
   theme(
-    axis.text.x = element_text(vjust = 0.5, hjust = 0.5), # Standard text alignment
+    axis.text.x = element_text(vjust = 0.5, hjust = 0.5), # text alignment
     axis.ticks.x = element_line(),                        # Ensures the tick marks show up
     plot.title = element_text(face = "bold"),
     axis.title.x = element_text(face = "bold"),
@@ -309,6 +308,8 @@ ggplot(df_part1, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = f
        title = "Pairwise Analysis of SNP Pairs (1-12)",
        subtitle = "Very Close Classification (< 20kbp)")
 ```
+#-----------Generating Bar Plot (Suppl. fig. 3b)------------
+
 ```{r}
 # Extract every second name for the second half
 breaks_part2 <- unique(df_part2$Name)[seq(1, length(unique(df_part2$Name)), by = 2)]
@@ -339,6 +340,7 @@ ggplot(df_part2, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = f
 ```
 
 
+No overlaps from the significant pairs from the volcano plot
 ```{r}
  
 sig_from_volcano <- c("rs58825580", "rs7110863",  "rs10959883", "rs11241568", "rs4976976",  "rs10476497", "rs77960")
