@@ -139,6 +139,9 @@ for (i in 1:length(chr_distances_2$Classification)) {
 
 closepairs
 ```
+
+
+
 ```{r}
 SNP_names <- c()
 SNP_pval <- c()
