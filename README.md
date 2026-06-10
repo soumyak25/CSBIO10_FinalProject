@@ -32,7 +32,7 @@ Each plot (see below) requires additional processing
 ### Manhattan Plot 
 
 *Julia: 1) the inspiration + how you made your own, 2) next steps, 3) mention intermediary plots*
-gyygyy
+First, I subsetted the data so that we only had the columns SNP, CHR, BP, and P-values. The I made the chromosome number be recognized as a discrete number instead of continuous. This was so that I could arrange the base pairs to be matched with their corresponding chromosomes. Then I needed to make sure that the base positions weren't overlapping (because base position restarts with every chromosome), so I multiplied each chromosome number by 1,000,000,000 and added the base positions so that I could plot all of the SNPs on one continuous x-axis. Each color corresponds to a chromosome, and the y-axis is the -log10(p-values) so that it is easier to interpret. The dark blue line that goes across the graph, which signifies our significance level. I did do a facet wrap so that we could visualize each chromosome
 ***
 ### Funnel Plot    
 #### **Motivation — — —**
@@ -118,6 +118,7 @@ We made a bar graph of very close SNP pairs and their p-values, colored to diffe
 
 
 *Julia: Creating the distance table for chr1*
+
 
 *Jackie: Creating the distance table for all chromosomes*
 
