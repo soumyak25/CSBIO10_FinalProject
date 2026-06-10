@@ -236,13 +236,89 @@ gene_legend
 
 #pairdf_long <- pivot_longer(pairdf, cols = everything(), names_to = "Pair", values_to = "P_Value")
 #pairdf_long
+#I NEED THE P-VALUES OF EACH OF THESE SNPS AS COLUMSN IN THE DF
+
 ```{r}
 genevec
 ```
 
+```{r}
+# 1. Update the ggplot code with the labels argument
+ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = factor(col))) + 
+  geom_col() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
+  scale_fill_manual(
+    values = palette_cols,
+    labels = gene_legend, # This assigns your custom gene names to the legend
+    name = "Genes"        # Optional: Adds a title to your legend
+  )
 
+```
 
-#I NEED THE P-VALUES OF EACH OF THESE SNPS AS COLUMSN IN THE DF
+```{r}
+# Ensure col is set up correctly (values 1 to 24)
+df_data$col <- rep(1:24, each = 2)[1:nrow(df_data)]
+
+# --- Split the Data Frame ---
+df_part1 <- subset(df_data, col <= 12)
+df_part2 <- subset(df_data, col > 12)
+
+# --- Split the Color Palette ---
+palette_part1 <- palette_cols[1:12]
+palette_part2 <- palette_cols[13:24]
+
+# --- Split the Legend Labels ---
+legend_part1 <- gene_legend[1:12]
+legend_part2 <- gene_legend[13:24]
+```
+
+```{r}
+# Extract every second name to use as breaks (creates a tick mark every 2 SNPs)
+breaks_part1 <- unique(df_part1$Name)[seq(1, length(unique(df_part1$Name)), by = 2)]
+
+# Create a clean label for those ticks, like "Pair 1", "Pair 2", etc.
+labels_part1 <- paste("Pair", 1:12)
+
+ggplot(df_part1, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = factor(col))) +  
+  geom_col() +  
+  scale_x_discrete(
+    breaks = breaks_part1,  # Forces a tick mark every 2 SNPs
+    labels = labels_part1   # Names them cleanly "Pair 1", "Pair 2"...
+  ) +
+  theme(
+    axis.text.x = element_text(vjust = 0.5, hjust = 0.5), # Standard text alignment
+    axis.ticks.x = element_line()                        # Ensures the tick marks show up
+  ) +  
+  scale_fill_manual(
+    values = palette_part1,
+    labels = legend_part1,
+    name = "Genes (1-12)"
+  ) +
+  labs(x = "SNP Pairs")
+```
+```{r}
+# Extract every second name for the second half
+breaks_part2 <- unique(df_part2$Name)[seq(1, length(unique(df_part2$Name)), by = 2)]
+labels_part2 <- paste("Pair", 13:24)
+
+ggplot(df_part2, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = factor(col))) +  
+  geom_col() +  
+  scale_x_discrete(
+    breaks = breaks_part2,  
+    labels = labels_part2   
+  ) +
+  theme(
+    axis.text.x = element_text(vjust = 0.5, hjust = 0.5), 
+    axis.ticks.x = element_line()                        
+  ) +  
+  scale_fill_manual(
+    values = palette_part2,
+    labels = legend_part2,
+    name = "Genes (13-24)"
+  ) +
+  labs(x = "SNP Pairs")
+```
+
 
 ```{r}
  
