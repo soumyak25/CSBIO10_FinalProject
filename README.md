@@ -32,7 +32,7 @@ Each plot (see below) requires additional processing
 ### Manhattan Plot 
 
 *Julia: 1) the inspiration + how you made your own, 2) next steps, 3) mention intermediary plots*
-First, I subsetted the data so that we only had the columns SNP, CHR, BP, and P-values. The I made the chromosome number be recognized as a discrete number instead of continuous. This was so that I could arrange the base pairs to be matched with their corresponding chromosomes. Then I needed to make sure that the base positions weren't overlapping (because base position restarts with every chromosome), so I multiplied each chromosome number by 1,000,000,000 and added the base positions so that I could plot all of the SNPs on one continuous x-axis. Each color corresponds to a chromosome, and the y-axis is the -log10(p-values) so that it is easier to interpret. The dark blue line that goes across the graph, which signifies our significance level. I did do a facet wrap so that we could visualize each chromosome
+First, I subsetted the data so that we only had the columns SNP, CHR, BP, and P-values. The I made the chromosome number be recognized as a discrete number instead of continuous. This was so that I could arrange the base pairs to be matched with their corresponding chromosomes. Then I needed to make sure that the base positions weren't overlapping (because base position restarts with every chromosome), so I multiplied each chromosome number by 1,000,000,000 and added the base positions so that I could plot all of the SNPs on one continuous x-axis. Each color corresponds to a chromosome, and the y-axis is the -log10(p-values) so that it is easier to interpret. The dark blue line that goes across the graph, which signifies our significance level. I did do a facet wrap so that we could visualize each chromosome independently, however the result was cramped and looked rather unpleasent so I decided not to proceed in that direction.
 ***
 ### Funnel Plot    
 #### **Motivation — — —**
@@ -112,12 +112,13 @@ I tried long and hard to find a dataset of persons with ANX taking a CV medicati
 
 #### **Generating the Plot — — —**
 
-We are looking at the SNP pairs that are very close to each other in terms of distance. We want to see if the SNPs in the same pair are both significant and are on the same genes. If they are on the same genes and at least one of them is significant, they can be used as potential markers in the future disease studies to study genes related to anxiety.
+We are looking at the SNP pairs that are very close to each other in terms of distance. We want to see if the SNPs in the same pair are both significant and are on the same genes. If they are on the same genes and at least one of them is significant, they can be used as potential markers in future disease studies to study genes related to anxiety.
 
-We made a bar graph of very close SNP pairs and their p-values, colored to differentiate the pairs.
+We made a bar graph of very close SNP pairs and their p-values, with colors to distinguish the pairs.
 
 
 *Julia: Creating the distance table for chr1*
+When doing the Manhattan Plot, I saw some overlap in the points that marked the SNPs of interest, and wondered if the distance between any of them were actually close enough to make an impact. What I ended up doing was making a table that listed the differences between each base position and then classified them by the amount of nucleotides they were away. The categories were: "very far, (distance over 1,000,000 bp away), "far" (1,000,000 - 100,000) "close" (20,000 - 100,000) and "very close" (less than 20,000). The categories represent, respectively: unrelated, on the same chromosome, genetic cluster/linkage disequilibrium, and inside the same gene. For simplicity, I only made a table of chromosome 1, however we eventually analyzed the remaining chromosomes as well.
 
 
 *Jackie: Creating the distance table for all chromosomes*
@@ -144,7 +145,8 @@ GWAS Study and Dataset:
 
 SNP Base Pair Position Pair Distance Classifications:
 
-*Julia: cite*
+Average gene size - Human Homo sapiens - BNID 105336. (2026). Harvard.edu. https://bionumbers.hms.harvard.edu/bionumber.aspx?id=105336&ver=6Linkage Disequilibrium 101: What LD Measures and 
+When It Matters. (2019). Cd-Genomics.com. https://www.cd-genomics.com/pop-genomics/resources/linkage-disequilibrium-overview.html
 
 The Genes on Which the Significant SNPs Exist, According to the Volcano Plot:
 
