@@ -189,6 +189,8 @@ ggplot(df_data, aes(x = factor(Name, levels = unique(Name)), y = PVal, fill = fa
 
 
 ```{r}
+library(stringr)
+library(tidyr)
 pairdf <- as.data.frame(do.call(rbind, closepairs))
 colnames(pairdf) <- c('Chromosome', 'SNP1', 'Pval1', 'SNP2', 'Pval2')
 
@@ -197,13 +199,34 @@ for (i in seq(from = 1, to = 48, by = 2)) {
     if (grepl("0.0", df_data$genes[i], fixed = TRUE)) {
       genevec <-append(genevec, df_data$genes[i])
     } 
+    else{
+      genevec <- append(genevec, 'NA')
+    }
+}
+abrgenevec <- genevec
+inflag <- FALSE
+
+
+tempvec <- (c)
+for (i in abrgenevec) {
+  if (grepl(",", abrgenevec[i])) {
+    tempvec <- split(abrgenevec, ',', drop = FALSE)
+    while () {
+      
+      if (grepl("0.0", tempvec[j]) {
+        abrgenevec[i] <- tempvec[j]
+      }
+    }
+  }
 }
 genevec
 
+#pairdf_long <- pivot_longer(pairdf, cols = everything(), names_to = "Pair", values_to = "P_Value")
+#pairdf_long
+
+
 
 #I NEED THE P-VALUES OF EACH OF THESE SNPS AS COLUMSN IN THE DF.
-
-
 ```
 
 
