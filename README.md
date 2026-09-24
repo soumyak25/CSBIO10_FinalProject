@@ -11,9 +11,9 @@ Which genes are statistically probable to contribute to the symptoms of anxiety?
 
 ## **Project and Dataset Introduction**
 
-Anxiety affects more than 300 million people across the world. Each person is affected differently by anxiety, however these disroders likely stem from the same issue, hyper reactive threat response system. There is no singular “anxiety gene” instead its caused by hundreds of tiny scattered DNA variations, also called SNPS.  
+Anxiety affects more than 300 million people across the world. Each person is affected differently by anxiety; however, these disorders likely stem from the same issue, hyper reactive threat response system. There is no singular “anxiety gene”; instead, it's caused by hundreds of tiny, scattered DNA variations, also called SNPS.  
 
-Our study uses a genome wide association study, so we are able to scan the entire genome of people. In doing this we can identify which genetic markers/SNPs are tied to anxiety. 
+Our study uses a genome-wide association study, so we are able to scan the entire genome of people. In doing this, we can identify which genetic markers/SNPs are tied to anxiety. 
 
 
 ## **Data Pre-Processing**
@@ -45,7 +45,7 @@ The purpose of the Manhattan plot was to graph each SNP in the data and note its
 
 We subsetted the data so that we only had the columns SNP, CHR, BP, and P-values, and made the chromosome number be recognized as a discrete number instead of continuous. This was so that we could arrange the base pairs to be matched with their corresponding chromosomes. To make sure that the base positions weren't overlapping (because base position restarts with every chromosome), we multiplied each chromosome number by 1,000,000,000 and added the base positions so that we could plot all of the SNPs on one continuous x-axis. 
 
-Each color corresponds to a chromosome, and the y-axis is the -log10(p-values) so that it is easier to interpret. The dark blue line that goes across the graph, signifies our significance level. While we attempted to use a facet wrap so that we could visualize each chromosome independently, the result was cramped; we left that plot in a scratch file.
+Each color corresponds to a chromosome, and the y-axis is the -log10(p-values) so that it is easier to interpret. The dark blue line that goes across the graph signifies our significance level. While we attempted to use a facet wrap so that we could visualize each chromosome independently, the result was cramped; we left that plot in a scratch file.
 ***
 ### Funnel Plot    
 #### **Motivation — — —**
